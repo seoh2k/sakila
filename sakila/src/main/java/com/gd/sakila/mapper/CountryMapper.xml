@@ -12,7 +12,7 @@
 		ORDER BY country_id ASC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
-	<select id="selectCoxuntryTotal" resultType="int">
+	<select id="selectCountryTotal" resultType="int">
 		SELECT COUNT(*) FROM country
 	</select>
 </mapper>
