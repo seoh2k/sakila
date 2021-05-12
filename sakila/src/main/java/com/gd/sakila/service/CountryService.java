@@ -47,13 +47,16 @@ import com.gd.sakila.vo.PageParam;
  */
 
 @Service
-@Transactional // 예외발생한 것을 모두 롤백시킨다.
+@Transactional // spring에 트랜잭션 기능이 있다. 어떤 메서드를 실행하다가 에러가 뜨면 그 메서드가 있는 서비스 롤백한다.
 public class CountryService {
-	@Autowired
-	private CountryMapper countryMapper; // 스프링 기능 1. countryMapper 객체를 주입(의존성 주입)
+	// 만들어지지 않는 클래스가 존재하고 사용해야 한다면 생성자로 인해 기다려야한다.
+	@Autowired 
+	private CountryMapper countryMapper; // 스프링 기능 1. countryMapper에 객체를 주입(의존성 주입)
+	// spring 부팅 -> Mapper라는 에노테이션이 붙어 있으니 CountryMapper의 서브 클래스를 만듬 -> 서브 클래스의 객체를 만듬 -> 서비스 에노테이션이 있으므로 자동으로 CountryService 객체를 만드는데 그 와중에 Autowired가 있으므로 countryMapper를 먼저 찾아서(없으면 만듬) 객체 주입(bean이라고 부름)
 	
 	public Map<String, Object> getCountryList(int currentPage, int rowPerPage){
-		// 컨트롤러에서 보내어준 매개값을 가공
+		// CountryMapper countryMapper = new CountryMapper(); // 인터페이스 객체 생성 불가
+		// 1. 컨트롤러에서 보내어준 매개값을 가공
 		int beginRow = (currentPage -1) * rowPerPage;
 		PageParam pageParam = new PageParam(); // 컨트롤러는 순수하게 요청 처리하는 일만 해야한다.
 		pageParam.setBeginRow(beginRow);
@@ -65,7 +68,7 @@ public class CountryService {
 		
 		// 3. dao의 반환값을 가공
 		int lastPage = total / rowPerPage;
-		if(total % rowPerPage != 0) {
+		if(total % rowPerPage != 0) { // 나누어 떨어지지 않으면
 			lastPage += 1;
 		}
 		Map<String, Object> map = new HashMap<String, Object>();
