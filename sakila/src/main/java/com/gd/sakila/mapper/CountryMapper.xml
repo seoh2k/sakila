@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.sakila.mapper.CountryMapper">
+	<select id="selectCountryList" 
+			resultType="com.gd.sakila.vo.Country" 
+			parameterType="com.gd.sakila.vo.PageParam">
+		SELECT
+			country_id countryId,
+			country country,
+			last_update lastUpdate
+		FROM country
+		ORDER BY country_id ASC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	<select id="selectCountryTotal" resultType="int">
+		SELECT COUNT(*) FROM country
+	</select>
+</mapper>

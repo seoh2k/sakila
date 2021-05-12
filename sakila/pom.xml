@@ -27,9 +27,9 @@
 		
 		<!-- tomcat -->
 		<dependency>
-		    <groupId>org.apache.tomcat.embed</groupId>
-		    <artifactId>tomcat-embed-core</artifactId>
-		    <version>9.0.45</version>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<version>9.0.45</version>
 		</dependency>
 		
 		<dependency>
