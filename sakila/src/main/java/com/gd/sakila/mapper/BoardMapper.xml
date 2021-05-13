@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.BoardMapper">
+
 	<!-- try/catch는 스프링이 없애준다. -->
+	<!-- parameterType: parameterType을 어디서 가져오는지를 적는 것, LIMIT에 Page 변수가 있기 때문에 Page에서 가져온다-->
 	<select id="selectBoardList" resultType="com.gd.sakila.vo.Board" parameterType="com.gd.sakila.vo.Page">
 		SELECT 
 			board_id boardId,
@@ -18,36 +20,41 @@
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 
-	<select id="selectTotal" resultType="Integer" parameterType="String">
+	<select id="selectBoardTotal" resultType="Integer" parameterType="String">
 		SELECT COUNT(*) FROM board <!-- 기본키보다 *가 빠르다 -->
-		<if test="searchWord != null">
-			board_title LIKE CONCAT('%',#{searchWord},'%') <!-- 널이 들어가면 안된다. 차라리 공백이 들어간다. -->
-		</if>
+		<where>
+			<if test="searchWord != null">
+				board_title LIKE CONCAT('%',#{searchWord},'%') <!-- 널이 들어가면 안된다. 차라리 공백이 들어간다. -->
+			</if>
+		</where>
 	</select>
 
-	<select id="selectBoardOne" parameterType="Integer" resultType="com.gd.sakila.vo.Board"> <!-- resultType: 제네릭 타입이다 -->
+	<select id="selectBoardOne" parameterType="Integer" resultType="java.util.Map"> <!-- resultType: 제네릭 타입이다 -->
 		SELECT 
-			board_id boardId,
-			board_title boardTitle,
-			board_content boardContent,
-			staff_id staffId,
-			insert_date insertDate
+			b.board_id boardId,
+			b.board_title boardTitle,
+			b.board_content boardContent,
+			b.insert_date insertDate,
+			s.username userName
 		FROM
-			board
+			board b INNER JOIN staff s
+		ON b.staff_id = s.staff_id
 		WHERE board_id = #{boardId}
 	</select>
 
 	<insert id="insertBoard" parameterType="com.gd.sakila.vo.Board">
-		INSERT INTO board{
+		INSERT INTO board(
 			board_pw,
 			board_title,
 			board_content,
+			staff_id,
 			insert_date
 		) VALUES (
 			<!-- PASSWORD(board.getBoardPw()) : 이렇게 할 필요 없다-->
 			PASSWORD(#{boardPw}),
 			#{boardTitle},
 			#{boardContent},
+			#{staffId},
 			NOW()
 		)
 	</insert>
