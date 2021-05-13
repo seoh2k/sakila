@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.sakila.mapper.BoardMapper">
+	<!-- try/catch는 스프링이 없애준다. -->
+	<select id="selectBoardList" resultType="com.gd.sakila.vo.Board" parameterType="com.gd.sakila.vo.Page">
+		SELECT 
+			board_id boardId,
+			board_title boardTitle,
+			insert_date insertDate
+		FROM
+			board
+		<where>
+			<if test="searchWord != null">
+				board_title LIKE CONCAT('%',#{searchWord},'%') <!-- 널이 들어가면 안된다. 차라리 공백이 들어간다. -->
+			</if>
+		</where>
+		ORDER BY insert_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+
+	<select id="selectTotal" resultType="Integer" parameterType="String">
+		SELECT COUNT(*) FROM board <!-- 기본키보다 *가 빠르다 -->
+		<if test="searchWord != null">
+			board_title LIKE CONCAT('%',#{searchWord},'%') <!-- 널이 들어가면 안된다. 차라리 공백이 들어간다. -->
+		</if>
+	</select>
+
+	<select id="selectBoardOne" parameterType="Integer" resultType="com.gd.sakila.vo.Board"> <!-- resultType: 제네릭 타입이다 -->
+		SELECT 
+			board_id boardId,
+			board_title boardTitle,
+			board_content boardContent,
+			staff_id staffId,
+			insert_date insertDate
+		FROM
+			board
+		WHERE board_id = #{boardId}
+	</select>
+
+	<insert id="insertBoard" parameterType="com.gd.sakila.vo.Board">
+		INSERT INTO board{
+			board_pw,
+			board_title,
+			board_content,
+			insert_date
+		) VALUES (
+			<!-- PASSWORD(board.getBoardPw()) : 이렇게 할 필요 없다-->
+			PASSWORD(#{boardPw}),
+			#{boardTitle},
+			#{boardContent},
+			NOW()
+		)
+	</insert>
+	
+	<delete id="deleteBoard" parameterType="com.gd.sakila.vo.Board"> <!-- 받아오는 값이 하나다 -->
+		DELETE FROM board
+		WHERE board_id = #{boardId} <!-- 임의의 이름 -->
+		AND board_pw = PASSWORD(#{board})
+	</delete>
+
+	<update id="updateBoard" parameterType="com.gd.sakila.vo.Board">
+		UPDATE board
+		SET board_title = #{boardTitle},
+			board_content = #{boardContent}
+		WHERE board_id = #{boardId}
+		AND board_pw = PASSWORD(#{board})
+	</update>
+</mapper>
