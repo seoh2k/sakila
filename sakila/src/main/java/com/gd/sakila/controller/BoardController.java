@@ -3,7 +3,6 @@ package com.gd.sakila.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +12,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
+	// 리턴타입은 뷰 이름 문자열이다. C -> V
+	@GetMapping("/removeBoard")
+	// model안에 넣는다
+	public String removeBoard(Model model, @RequestParam(value="boardId", required= true) int boardId) { // string인데 자동으로 int로 형변환 된다
+		log.debug("▶▶▶▶▶boardId param: "+boardId);
+		model.addAttribute("boardId", boardId);
+		return "removeBoard"; // 포워딩
+	}
+	
+	// C -> M -> redirect(C)
+	@PostMapping("/removeBoard")
+	public String removeBoard(Board board) {
+		int row = boardService.removeBoard(board);
+		log.debug("removeBoard(): "+row);
+		if(row == 0) {
+			return "redirect:/getBoardOne?boardId="+board.getBoardId();
+		} 
+		return "redirect:/getBoardList"; // 리다이렉트
+	}
+	
 	// addBoard 띄워준다
 	@GetMapping("/addBoard") // addBoard라는 요청이 들어오면 addBoard를 보여준다
 	public String addBoard() {
-		return "addBoard";
+		return "addBoard"; // 뷰 이름
 	}
 	
 	// 입력하려면 보드와 관련된 것 전부 받아야된다

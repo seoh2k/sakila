@@ -62,7 +62,7 @@
 	<delete id="deleteBoard" parameterType="com.gd.sakila.vo.Board"> <!-- 받아오는 값이 하나다 -->
 		DELETE FROM board
 		WHERE board_id = #{boardId} <!-- 임의의 이름 -->
-		AND board_pw = PASSWORD(#{board})
+		AND board_pw = PASSWORD(#{boardPw})
 	</delete>
 
 	<update id="updateBoard" parameterType="com.gd.sakila.vo.Board">

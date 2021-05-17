@@ -1,8 +1,8 @@
 package com.gd.sakila.vo;
 
 import lombok.Data;
-
-@Data
+// @Data: toString 오버라이드 되어있다.
+@Data 
 public class Board {
 	private int boardId;
 	private String boardPw;

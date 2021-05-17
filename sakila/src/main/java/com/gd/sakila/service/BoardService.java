@@ -6,15 +6,26 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.BoardMapper;
 import com.gd.sakila.vo.Board;
 import com.gd.sakila.vo.Page;
 
+import jdk.internal.org.jline.utils.Log;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
+@Transactional
 public class BoardService {
 	@Autowired
 	BoardMapper boardMapper;
+	
+	public int removeBoard(Board board) {
+		log.debug("▶▶▶▶▶ removeBoard param: " + board.toString()); 
+		return boardMapper.deleteBoard(board);
+	}
 	
 	public int addBoard(Board board) { // 0이면 입력 실패, 1이면 입력 성공
 		return boardMapper.insertBoard(board);
