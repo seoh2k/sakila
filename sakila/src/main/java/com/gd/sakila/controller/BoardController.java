@@ -20,6 +20,23 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
+	@GetMapping("/modifyBoard")
+	public String modifyBoard(Model model, @RequestParam(value="boardId", required= true) int boardId) {
+		log.debug("▶▶▶▶▶modifyBoard param: "+boardId);
+		// select
+		Map<String, Object> map = boardService.getBoardOne(boardId);
+		model.addAttribute("map", map);
+		return "modifyBoard";
+	}
+	
+	@PostMapping("/modifyBoard")
+	public String modifyBoard(Board board) {
+		// update
+		int row = boardService.modifyBoard(board);
+		log.debug("▶▶▶▶▶update row: "+row);
+		return "redirect:/getBoardOne?boardId="+board.getBoardId();
+	}
+	
 	// 리턴타입은 뷰 이름 문자열이다. C -> V
 	@GetMapping("/removeBoard")
 	// model안에 넣는다
@@ -56,9 +73,11 @@ public class BoardController {
 	@GetMapping("/getBoardOne")
 	public String getBoardOne(Model model, 
 								@RequestParam(value="boardId", required = true) int boardId) { // View가 있으면 모델이 존재
+		log.debug(" boardId : "+boardId); 
 		Map<String, Object> map = boardService.getBoardOne(boardId);
-		System.out.println(map);
-		model.addAttribute("map", map);
+		log.debug(" getBoardOne map: "+map);
+		model.addAttribute("boardMap", map.get("boardMap"));
+		model.addAttribute("commentList", map.get("commentList"));
 		return "getBoardOne";
 	}
 	

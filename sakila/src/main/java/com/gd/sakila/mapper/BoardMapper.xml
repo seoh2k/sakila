@@ -35,7 +35,7 @@
 			b.board_title boardTitle,
 			b.board_content boardContent,
 			b.insert_date insertDate,
-			s.username userName
+			s.username username
 		FROM
 			board b INNER JOIN staff s
 		ON b.staff_id = s.staff_id
@@ -70,6 +70,6 @@
 		SET board_title = #{boardTitle},
 			board_content = #{boardContent}
 		WHERE board_id = #{boardId}
-		AND board_pw = PASSWORD(#{board})
+		AND board_pw = PASSWORD(#{boardPw})
 	</update>
 </mapper>

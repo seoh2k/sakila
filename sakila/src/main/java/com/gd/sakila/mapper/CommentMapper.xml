@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.sakila.mapper.CommentMapper">
+	<select id="selectCommentListByBoard"
+			parameterType="Integer"
+			resultType="com.gd.sakila.vo.Comment">
+		SELECT 
+			comment_id commentId,
+			username username,
+			comment_content commentContent,
+			insert_date insertDate
+		FROM comment
+		WHERE board_id = #{boardId}
+		ORDER BY insert_date DESC
+	</select>
+</mapper>
