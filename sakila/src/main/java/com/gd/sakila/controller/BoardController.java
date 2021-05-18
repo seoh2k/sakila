@@ -7,15 +7,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@RequestMapping("/admin") // get과 post 모두 받는다, 모든 매핑 앞에 붙는다
 public class BoardController {
 	@Autowired
 	BoardService boardService;
@@ -34,7 +37,7 @@ public class BoardController {
 		// update
 		int row = boardService.modifyBoard(board);
 		log.debug("▶▶▶▶▶update row: "+row);
-		return "redirect:/getBoardOne?boardId="+board.getBoardId();
+		return "redirect:/admin/getBoardOne?boardId="+board.getBoardId();
 	}
 	
 	// 리턴타입은 뷰 이름 문자열이다. C -> V
@@ -52,9 +55,9 @@ public class BoardController {
 		int row = boardService.removeBoard(board);
 		log.debug("removeBoard(): "+row);
 		if(row == 0) {
-			return "redirect:/getBoardOne?boardId="+board.getBoardId();
+			return "redirect:/admin/getBoardOne?boardId="+board.getBoardId();
 		} 
-		return "redirect:/getBoardList"; // 리다이렉트
+		return "redirect:/admin/getBoardList"; // 리다이렉트
 	}
 	
 	// addBoard 띄워준다
@@ -67,7 +70,7 @@ public class BoardController {
 	@PostMapping("/addBoard")
 	public String addBoard(Board board) { // Board 타입으로 받는다 // 커맨드 객체: 폼하나의 모양과 같다. 하나의 타입으로 뭉쳐서 받는다.
 		boardService.addBoard(board);
-		return "redirect:/getBoardList"; // redirect:/: 포워딩 안시키고 sendRedirect 시킨다. 리다이렉트 없으면 다 포워딩 시킨다.
+		return "redirect:/admin/getBoardList"; // redirect:/: 포워딩 안시키고 sendRedirect 시킨다. 리다이렉트 없으면 다 포워딩 시킨다.
 	}
 	
 	@GetMapping("/getBoardOne")

@@ -1,10 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.CommentMapper">
+	<!-- board delete호출과 같이 transaction -->
+	<delete id="deleteCommentByBoardId" parameterType="Integer">
+		DELETE FROM comment
+		WHERE board_id=#{boardId}
+	</delete>
+	
+	<delete id="deleteCommentByCommentId" parameterType="Integer">
+		DELETE FROM comment
+		WHERE comment_id = #{commentId}
+	</delete>
+	
+	<insert id="insertComment" parameterType="com.gd.sakila.vo.Comment">
+		INSERT INTO comment(
+			board_id,
+			username,
+			comment_content,
+			insert_date
+		) VALUES (
+			#{boardId},
+			#{username},
+			#{commentContent},
+			NOW()
+		)
+	</insert>
+	
 	<select id="selectCommentListByBoard"
 			parameterType="Integer"
 			resultType="com.gd.sakila.vo.Comment">
 		SELECT 
+			board_id boardId,
 			comment_id commentId,
 			username username,
 			comment_content commentContent,

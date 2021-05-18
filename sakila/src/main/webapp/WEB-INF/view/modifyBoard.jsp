@@ -28,7 +28,7 @@ $(document).ready(function(){
 <body>
 <div class="container">
     <h1>Board Modify</h1>
-    <form id="modifyForm" action="${pageContext.request.contextPath}/modifyBoard" method="post">
+    <form id="modifyForm" action="${pageContext.request.contextPath}/admin/modifyBoard" method="post">
 		<table class="table">
 	         <tbody>
 				<tr>
@@ -58,7 +58,7 @@ $(document).ready(function(){
 	        </tbody>
 	    </table>
 	    <button type="button" id="btn">수정</button>
-	    <a class="btn btn-default" href="${pageContext.request.contextPath}/getBoardList">글목록</a>
+	    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getBoardList">글목록</a>
     </form>
      
 </div>

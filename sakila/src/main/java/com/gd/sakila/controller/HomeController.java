@@ -13,6 +13,6 @@ public class HomeController {
 	public String home() {
 		// System.out.println("home...");
 		log.debug("test");
-		return "home";
+		return "home"; // 로그인 만들 예정
 	}
 }

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.RuntimeErrorException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-@Transactional
+@Transactional // 예외가 발생하면 실행 단위가 지속된다.
 public class BoardService {
-	@Autowired BoardMapper boardMapper;
+	@Autowired BoardMapper boardMapper; /// 스캔 객체를 가지고 있으면 대입ㅇ르 해주겠다
 	@Autowired CommentMapper commentMapper;
 	
 	// 수정 액션
@@ -28,11 +30,24 @@ public class BoardService {
 		log.debug("▶▶▶▶▶ modifyBoard param: " + board.toString()); 
 		return boardMapper.updateBoard(board);
 	}
+	
 	// 삭제 액션
 	public int removeBoard(Board board) {
 		log.debug("▶▶▶▶▶ removeBoard param: " + board.toString()); 
-		return boardMapper.deleteBoard(board);
+		// 2) 게시글 삭제( FK를 지정하지 않거나, FK를 delete no action...
+		int boardRow = boardMapper.deleteBoard(board); // 0이면 댓글이 삭제가 안된다
+		if(boardRow == 0) {
+			return 0;
+		}
+				
+		// 1) 댓글 삭제
+		int commentRow = commentMapper.deleteCommentByBoardId(board.getBoardId());
+		log.debug("▶▶▶▶▶ removeBoard() commentRow: " + commentRow); 
+		
+		log.debug("▶▶▶▶▶ removeBoard() boardRow: " + boardRow); 
+		return boardRow;
 	}
+	
 	// 추가 액션
 	public int addBoard(Board board) { // 0이면 입력 실패, 1이면 입력 성공
 		return boardMapper.insertBoard(board);
