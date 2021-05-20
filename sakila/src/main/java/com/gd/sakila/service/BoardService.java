@@ -1,18 +1,25 @@
 package com.gd.sakila.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gd.sakila.mapper.BoardMapper;
+import com.gd.sakila.mapper.BoardfileMapper;
 import com.gd.sakila.mapper.CommentMapper;
 import com.gd.sakila.vo.Board;
+import com.gd.sakila.vo.BoardForm;
+import com.gd.sakila.vo.Boardfile;
 import com.gd.sakila.vo.Comment;
 import com.gd.sakila.vo.Page;
 
@@ -23,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional // 예외가 발생하면 실행 단위가 지속된다.
 public class BoardService {
 	@Autowired BoardMapper boardMapper; /// 스캔 객체를 가지고 있으면 대입ㅇ르 해주겠다
+	@Autowired BoardfileMapper boardfileMapper;
 	@Autowired CommentMapper commentMapper;
 	
 	// 수정 액션
@@ -49,8 +57,50 @@ public class BoardService {
 	}
 	
 	// 추가 액션
-	public int addBoard(Board board) { // 0이면 입력 실패, 1이면 입력 성공
-		return boardMapper.insertBoard(board);
+	public void addBoard(BoardForm boardForm) { // 0이면 입력 실패, 1이면 입력 성공
+		// boardForm --> board, boardfile
+		log.debug("▶▶▶▶▶ boardForm: " + boardForm); 
+		
+		// 1) 
+		Board board = boardForm.getBoard(); // boardId가 null
+		log.debug("▶▶▶▶▶ board: " + board.getBoardId());  // 0
+		boardMapper.insertBoard(board); 
+		// 입력 시 만들어진 key값을 리턴받아야 한다. -> 리턴받을 수 없다. -> 매개변수 board의 boardId값을 변경해준다.
+		log.debug("▶▶▶▶▶ board: " + board.getBoardId()); // auto increment로 입력된 값
+		
+		// 2) 
+		List<MultipartFile> list = boardForm.getBoardfile();
+		if(list != null) {
+			for(MultipartFile f : list) {
+				Boardfile boardfile = new Boardfile();
+				boardfile.setBoardId(board.getBoardId()); // auto increment로 입력된 값
+				// test.TXT - newname.txt
+				String originalFilename = f.getOriginalFilename();
+				int p = originalFilename.lastIndexOf("."); // 4
+				String ext = originalFilename.substring(p).toLowerCase(); // .txt
+				String prename = UUID.randomUUID().toString().replace("-", "");
+				
+				String filename = prename+ext;
+				boardfile.setBoardfileName(filename); // 이슈 >>> 중복으로 인해 덮어쓰기 가능
+				boardfile.setBoardfileSize(f.getSize());
+				boardfile.setBoardfileType(f.getContentType());
+				log.debug("▶▶▶▶▶ boardfile: " + boardfile);
+				
+				// 2-1)
+				boardfileMapper.insertBoardfile(boardfile); 
+				
+				// 2-2) 
+				// 파일을 저장
+				try {
+					f.transferTo(new File("D:\\upload\\"+filename));
+				} catch (Exception e) {
+					throw new RuntimeException(); // 트라이캐치 안해도 에러가 발생하지 않는다.
+				} 
+				
+				
+			}
+		}
+		
 	}
 	
 	// 1) 상세보기 + 2) 댓글 목록, 수정 폼
