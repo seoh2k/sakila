@@ -18,7 +18,7 @@
 </head>
 <body>
 	<h1>removeBoard</h1>
-	<form id="removeForm" action="${pageContext.request.contextPath}/removeBoard" method="post">
+	<form id="removeForm" action="${pageContext.request.contextPath}/admin/removeBoard" method="post">
 		<input type="hidden" name="boardId" value="${boardId}">
 		<div>
 			<label>boardPw: </label>

@@ -1,6 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.BoardfileMapper"><!-- namespace는 package와 같다 -->
+	<!-- 추가된 파일 삭제 -->
+	<delete id="deleteBoardfileOne">
+		DELETE FROM boardfile
+		WHERE boardfile_id = #{boardfileId}
+	</delete>
+	
+	<!-- 게시물 삭제 시 참조되는 모든 파일 삭제 -->
+	<delete id="deleteBoardfileByBoardId" parameterType="int">
+		DELETE FROM boardfile
+		WHERE board_id = #{boardId}
+	</delete>
+	
+	<!-- 하나의 게시글에 참조되는 boardfile select -->
+	<!-- 테이블 컬럼명과 제네릭타입의 필드명을 불일치 해결 방법
+		1) mybatis 설정파일 셋팅을 통해서 스네이크현식을 자동으로 카멜표현식으로 만든다(잘 안쓴다) 
+		2) resultMap을 사용하는 방법
+		3) 쿼리 별명을 사용하는 방법 
+	-->
+			
+	<select id="selectBoardfileByBoardId"
+			parameterType="int"
+			resultType="com.gd.sakila.vo.Boardfile"> <!-- resultType: 리턴타입이 아니다, 제네릭 타입이다. 리스트를 어떤 리스트로 만들까를 정하는 것 -->
+		SELECT 
+			boardfile_id boardfileId,
+			board_id boardId,
+			boardfile_name boardfileName,
+			boardfile_size boardfileSize
+		FROM boardfile
+		WHERE board_id= #{boardId}
+	</select>
+
 	<insert id="insertBoardfile" parameterType="com.gd.sakila.vo.Boardfile">
 		INSERT INTO boardfile(
 			board_id,

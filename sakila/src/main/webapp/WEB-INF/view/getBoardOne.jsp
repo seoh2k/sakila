@@ -49,11 +49,33 @@ $(document).ready(function(){
                 <td>insert_date :</td>
                 <td>${boardMap.insertDate}</td>
             </tr>
+            <tr>
+                <td>boardfile :</td>
+                <td>
+                	<div>
+                		<a href="${pageContext.request.contextPath}/admin/addBoardfile?boardId=${boardMap.boardId}"><button type="button">파일추가</button></a>
+                	</div>
+					<!-- 보드파일을 출력하는 반복문 코드 구현 -->
+					<c:forEach var="f" items="${boardfileList}">
+						<div>
+							<a href="${pageContext.request.contextPath}/resource/${f.boardfileName}">
+								${f.boardfileName}
+							</a>
+							<a href="${pageContext.request.contextPath}/admin/removeBoardfile?boardfileId=${f.boardfileId}&boardId=${f.boardId}&boardfileName=${f.boardfileName}">
+								<button type="button">파일삭제</button>
+							</a>
+						</div>
+					</c:forEach>
+				</td>
+            </tr>
         </tbody>
     </table>
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/modifyBoard?boardId=${boardMap.boardId}">수정</a>
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/removeBoard?boardId=${boardMap.boardId}">삭제</a>
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getBoardList">글목록</a>
+    <a class="btn btn-default" 
+    	href="${pageContext.request.contextPath}/admin/modifyBoard?boardId=${boardMap.boardId}">수정</a>
+    <a class="btn btn-default" 
+    	href="${pageContext.request.contextPath}/admin/removeBoard?boardId=${boardMap.boardId}">삭제</a>
+    <a class="btn btn-default" 
+    	href="${pageContext.request.contextPath}/admin/getBoardList">글목록</a>
     
     <!-- 댓글 목록 -->
     <div>
