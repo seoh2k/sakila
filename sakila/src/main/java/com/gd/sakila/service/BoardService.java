@@ -58,7 +58,8 @@ public class BoardService {
 		if(boardfileList != null) {
 			for(Boardfile f : boardfileList) {
 				File temp = new File(""); // 프로젝트 폴더에 빈파일이 만들어진다.
-				String path = temp.getAbsolutePath(); // 프로젝트 폴더 // 경로를 매번 바꿔주기 힘ㄷ니까 설정
+				// getAbsolutePath: 파일의 절대 경로를 반환해주는 함수, 입력된 절대경로를 그대로 표현한다.
+				String path = temp.getAbsolutePath(); // 프로젝트 폴더 // 경로를 매번 바꿔주기 힘드니까 설정
 				File file = new File(path+"\\src\\main\\webapp\\resource\\"+f.getBoardfileName());
 				file.delete();
 			}

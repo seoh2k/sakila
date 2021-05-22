@@ -1,4 +1,4 @@
-package com.gd.sakila.controller;
+ package com.gd.sakila.controller;
 
 import java.util.Map;
 
@@ -84,7 +84,7 @@ public class BoardController {
 		model.addAttribute("boardMap", map.get("boardMap"));
 		model.addAttribute("boardfileList", map.get("boardfileList"));
 		model.addAttribute("commentList", map.get("commentList"));
-		return "getBoardOne";
+		return "getBoardOne"; // getBoardOne.jsp로 포워딩
 	}
 	
 	@GetMapping("/getBoardList")

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gd.sakila.mapper.BoardfileMapper"><!-- namespace는 package와 같다 -->
+<mapper namespace="com.gd.sakila.mapper.BoardfileMapper"> 
+<!-- namespace는 package와 같다
+		패키지명을 포함한 인터페이스 명으로 작성한다. -->
+	<!-- update, insert, delete에는 resultType이 없다 -->
+	
 	<!-- 추가된 파일 삭제 -->
-	<delete id="deleteBoardfileOne">
+	<delete id="deleteBoardfileOne" parameterType="int">
 		DELETE FROM boardfile
 		WHERE boardfile_id = #{boardfileId}
 	</delete>
@@ -19,10 +23,21 @@
 		2) resultMap을 사용하는 방법
 		3) 쿼리 별명을 사용하는 방법 
 	-->
-			
+	
+	<!-- select:
+			데이터 베이스에서 데이터를 가져온다(데이터를 조회한다) -->
+	<!-- parameterType: 
+			파라미터의 자료형
+			구문에 전달될 파라미터의 패키지 경로를 포함한 전체 클래스명이나 별칭
+			이 속성에 지정한 객체의 프로퍼티 값이 sql문의 입력 파라미터에 지정된다 -->
+	<!-- resultType:
+			반환타입의 자료형
+			select문 실행 결과를 담을 객체
+			패키지 이름을 포함한 클래스 이름 또는 객체 alias 지정
+			리턴타입이 아닌 제네릭 타입이다. -->		
 	<select id="selectBoardfileByBoardId"
 			parameterType="int"
-			resultType="com.gd.sakila.vo.Boardfile"> <!-- resultType: 리턴타입이 아니다, 제네릭 타입이다. 리스트를 어떤 리스트로 만들까를 정하는 것 -->
+			resultType="com.gd.sakila.vo.Boardfile">
 		SELECT 
 			boardfile_id boardfileId,
 			board_id boardId,
@@ -31,7 +46,11 @@
 		FROM boardfile
 		WHERE board_id= #{boardId}
 	</select>
-
+	
+	<!-- 
+		1. BoardList-게시글입력-파일추가
+		2. 상세보기에서 파일추가	 
+	-->
 	<insert id="insertBoardfile" parameterType="com.gd.sakila.vo.Boardfile">
 		INSERT INTO boardfile(
 			board_id,

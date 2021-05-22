@@ -22,7 +22,7 @@ public class BoardfileController {
 	@Autowired BoardfileService boardfileService;
 	
 	// 파일 추가 폼
-	@GetMapping("/addBoardfile")
+	@GetMapping("/addBoardfile") // addBoardfile 메서드 요청
 	public String addBoardfile(Model model, @RequestParam(value = "boardId", required = true) int boardId) {
 		model.addAttribute("boardId", boardId);
 		return "addBoardfile"; // /WEB-INF/view/addBoardfile.jsp으로 포워딩

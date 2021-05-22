@@ -15,11 +15,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-@Transactional // 예외가 발생하면 실행 단위가 지속된다.
+@Transactional // 쪼개질 수 없는 하나의 단위작업, 한번에 이루어지는 작업의 단위
 public class BoardfileService {
-	@Autowired BoardfileMapper boardfileMapper;
+	@Autowired BoardfileMapper boardfileMapper; 
 	
 	// boardOne에서 파일 추가
+	// MultipartFile은 스프링에서 업로드한 파일을 표현할 때 사용, 업로드한 파일의 이름, 실제 데이터, 파일 크기 등을 구할 수 있다.
 	public int addBoardfile(MultipartFile multipartFile, int boardId) {
 		
 		// 1) 물리적 파일 저장
@@ -27,13 +28,17 @@ public class BoardfileService {
 		// 프로젝트 경로
 		String path = temp.getAbsolutePath(); 
 		// 확장자
+		// lastIndexOf: 문자열에서 탐색하는 문자열이 마지막으로 등장하는 위치에 대한 index를 반환한다.
 		int p = multipartFile.getOriginalFilename().lastIndexOf(".");
-		String ext = multipartFile.getOriginalFilename().substring(p);
+		String ext = multipartFile.getOriginalFilename().substring(p); // substring: 확장자 앞 .의 앞을 잘라낸다.
 		// 확장자를 제외한 파일 이름
+		// UUID: 업로드된 파일명의 중복을 방지하기 위해 파일명을 변경할 때 사용.
+		// randomUUID: 유일한 식별자를 생성한다.
+		// toString: 반환되는 UUID가 객체이므로 문자열 표현을 얻기 위해 사용하는 메서드
 		String prename = UUID.randomUUID().toString().replace("-", "");
 		File file = new File(path + "\\src\\main\\webapp\\resource\\" + prename+ext);
 		try {
-			multipartFile.transferTo(file); //multipart안의 파일을 빈 file에 복사.
+			multipartFile.transferTo(file); // transferTo: 업로드한 파일을 특정파일로 저장하고 싶을 때 사용
 		} catch (Exception e) {
 			throw new RuntimeException(); //강제로 RuntimeException 예외 발생시키기
 		}  

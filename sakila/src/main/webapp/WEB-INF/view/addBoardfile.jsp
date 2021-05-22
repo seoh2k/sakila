@@ -19,6 +19,10 @@ $(document).ready(function(){
 </head>
 <body>
 	<h1>파일추가</h1>
+	<!-- method: 파일 추가 시 post를 사용한다. -->
+	<!-- enctype: 파일 업로드를 위한 속성, 웹 서버로 데이터를 넘길 때 파일의 경로명과 파일 내용 모두를 전송하기 위해 사용한다. -->
+	<!-- multipart/form-data: 파일이나 이미지를 서버로 전송할 때 사용한다. -->
+	<!-- action: 자기 페이지의 url, 전송 목적지이다. addBoardfile은 jsp 페이지를 의미한다 -->
 	<form id="addForm" 
 			method="post"
 			enctype="multipart/form-data"
