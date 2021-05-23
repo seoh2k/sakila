@@ -1,6 +1,7 @@
 package com.gd.sakila.service;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.CountryMapper;
 import com.gd.sakila.vo.Country;
-import com.gd.sakila.vo.PageParam;
+import com.gd.sakila.vo.Page;
 
 /*
 * 스프링 부팅
@@ -58,12 +59,12 @@ public class CountryService {
 		// CountryMapper countryMapper = new CountryMapper(); // 인터페이스 객체 생성 불가
 		// 1. 컨트롤러에서 보내어준 매개값을 가공
 		int beginRow = (currentPage -1) * rowPerPage;
-		PageParam pageParam = new PageParam(); // 컨트롤러는 순수하게 요청 처리하는 일만 해야한다.
-		pageParam.setBeginRow(beginRow);
-		pageParam.setRowPerPage(rowPerPage);
+		Page page = new Page(); // 컨트롤러는 순수하게 요청 처리하는 일만 해야한다.
+		page.setBeginRow(beginRow);
+		page.setRowPerPage(rowPerPage);
 		
 		// 2. dao 호출
-		List<Country> list = countryMapper.selectCountryList(pageParam); // 서비스 하나에서 여러개의 디에이오를 호출할 수 있다
+		List<Country> list = countryMapper.selectCountryList(page); // 서비스 하나에서 여러개의 디에이오를 호출할 수 있다
 		int total = countryMapper.selectCountryTotal();
 		
 		// 3. dao의 반환값을 가공

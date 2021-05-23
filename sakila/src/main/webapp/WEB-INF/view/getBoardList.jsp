@@ -17,6 +17,9 @@
 <body>
 <div class="container">
     <h1>getBoardList</h1>
+    <div>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
+    </div>
     <table class="table table-striped">
         <thead>
             <tr>

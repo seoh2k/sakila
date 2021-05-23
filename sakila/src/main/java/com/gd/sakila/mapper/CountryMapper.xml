@@ -3,7 +3,7 @@
 <mapper namespace="com.gd.sakila.mapper.CountryMapper">
 	<select id="selectCountryList" 
 			resultType="com.gd.sakila.vo.Country" 
-			parameterType="com.gd.sakila.vo.PageParam">
+			parameterType="com.gd.sakila.vo.Page">
 		SELECT
 			country_id countryId,
 			country country,
