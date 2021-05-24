@@ -20,28 +20,40 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>FID</th>
+                <th>filmId</th>
                 <th>title</th>
+                <th>categoryName</th>
                 <th>description</th>
-                <th>category</th>
-                <th>price</th>
-                <th>length</th>
+                <th>releaseYear</th>
+                <th>languageId</th>
+                <th>rentalDuration</th>
+                <th>rentalRate</th>
+                <th>LENGTH</th>
+                <th>replacementCost</th>
                 <th>rating</th>
+                <th>specialFeatures</th>
+                <th>lastUpdate</th>
                 <th>actors</th>
             </tr>
         </thead>
         <tbody>
             <c:forEach var="f" items="${filmList}">
                 <tr>
-                    <td class="col-sm-1 text-center">${f.FID}</td>
+                    <td class="col-sm-1 text-center">${f.filmId}</td>
                     <td class="col-sm-2 text-center">
-                    	<a href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${f.FID}">${f.title}</a>
+                    	<a href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${f.filmId}">${f.title}</a>
                     </td>
-                    <td class="col-sm-2 text-center">${f.description}</td>
-                    <td class="col-sm-1 text-center">${f.category}</td>
-                    <td class="col-sm-1 text-center">${f.price}</td>
-                    <td class="col-sm-1 text-center">${f.length}</td>
+                    <td class="col-sm-2 text-center">${f.categoryName}</td>
+                    <td class="col-sm-1 text-center">${f.description}</td>
+                    <td class="col-sm-1 text-center">${f.releaseYear}</td>
+                    <td class="col-sm-1 text-center">${f.languageId}</td>
+                    <td class="col-sm-1 text-center">${f.rentalDuration}</td>
+                    <td class="col-sm-1 text-center">${f.rentalRate}</td>
+                    <td class="col-sm-2 text-center">${f.LENGTH}</td>
+                    <td class="col-sm-1 text-center">${f.replacementCost}</td>
                     <td class="col-sm-1 text-center">${f.rating}</td>
+                    <td class="col-sm-1 text-center">${f.specialFeatures}</td>
+                    <td class="col-sm-1 text-center">${f.lastUpdate}</td>
                     <td class="col-sm-1 text-center">${f.actors}</td>
                 </tr>
             </c:forEach>

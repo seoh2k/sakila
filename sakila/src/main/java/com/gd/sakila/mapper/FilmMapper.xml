@@ -4,21 +4,32 @@
 	
 	<select id="selectFilmList" parameterType="com.gd.sakila.vo.Page" resultType="com.gd.sakila.vo.FilmList">
 		SELECT 
-			FID FID,
-			title title,
-			description,
-			category,
-			price,
-			length,
-			rating,
-			actors
-		FROM nicer_but_slower_film_list
+			f.film_id filmId, 
+			f.title title, 
+			c.name categoryName,
+			f.description description, 
+			f.release_year releaseYear,
+			f.language_id languageId,
+			f.rental_duration rentalDuration,
+			f.rental_rate rentalRate,
+			f.length LENGTH,
+			f.replacement_cost replacementCost, 
+			f.rating rating,
+			f.special_features specialFeatures,
+			f.last_update lastUpdate,
+			GROUP_CONCAT(CONCAT(a.first_name, _utf8mb4' ', a.last_name) SEPARATOR ', ') AS actors
+		FROM film f
+		LEFT JOIN film_category fc ON f.film_id = fc.film_id
+		LEFT JOIN category c ON fc.category_id = c.category_id
+		LEFT OUTER JOIN film_actor fa ON f.film_id = fa.film_id
+		LEFT OUTER JOIN actor a ON fa.actor_id = a.actor_id
+		GROUP BY f.film_id
 		<where>
 			<if test="searchWord != null">
-				title LIKE CONCAT('%',#{searchWord},'%') OR actors LiKE CONCAT('%', #{searchWord}, '%')
+				title LIKE CONCAT('%', #{searchWord},'%') OR actors LiKE CONCAT('%', #{searchWord}, '%')
 			</if>
 		</where>
-		ORDER BY FID ASC
+		ORDER BY filmId ASC
 		LIMIT #{beginRow}, #{rowPerPage} 
 	</select>
 	

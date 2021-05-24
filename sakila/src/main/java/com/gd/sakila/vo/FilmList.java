@@ -4,12 +4,18 @@ import lombok.Data;
 
 @Data
 public class FilmList {
-	private int FID;
+	private int filmId;
 	private String title;
+	private String categoryName;
 	private String description;
-	private String category;
-	private double price;
-	private int length;
+	private String releaseYear;
+	private int languageId;
+	private int rentalDuration;
+	private double rentalRate;
+	private int LENGTH;
+	private double replacementCost;
 	private String rating;
+	private String specialFeatures;
+	private String lastUpdate;
 	private String actors;
 }
