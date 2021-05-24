@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.sakila.mapper.CustomerMapper">
+	<update id="updateCustomerActiveByScheduler">
+		UPDATE customer
+		SET active = 0
+		WHERE customer_id IN ( 	SELECT customer_id
+								FROM rental
+								GROUP BY customer_id
+								HAVING DATEDIFF(NOW(), MAX(rental_date)) > 365)
+	</update>
+</mapper>
