@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.sakila.mapper.FilmMapper"> 
+	
+	<select id="selectFilmList" parameterType="com.gd.sakila.vo.Page" resultType="com.gd.sakila.vo.FilmList">
+		SELECT 
+			FID FID,
+			title title,
+			description,
+			category,
+			price,
+			length,
+			rating,
+			actors
+		FROM nicer_but_slower_film_list
+		<where>
+			<if test="searchWord != null">
+				title LIKE CONCAT('%',#{searchWord},'%') OR actors LiKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+		ORDER BY FID ASC
+		LIMIT #{beginRow}, #{rowPerPage} 
+	</select>
+	
+	<select id="selectFilmTotal" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM nicer_but_slower_film_list
+		<where>
+			<if test="searchWord != null">
+				title LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- Map: filmId(in), storeId(in), filmCount(out) -->
+	<select id="selectFilmInStock" 
+		parameterType="java.util.Map"
+		resultType="int"
+		statementType="CALLABLE">
+		{
+			call film_in_stock(
+				#{filmId},
+				#{storeId},
+				#{filmCount, mode=OUT, jdbcType=DECIMAL, javaType=Integer}
+			)
+		}
+	</select>
+
+</mapper>
