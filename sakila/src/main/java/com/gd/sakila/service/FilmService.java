@@ -1,6 +1,7 @@
 package com.gd.sakila.service;
 
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -8,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gd.sakila.mapper.CategoryMapper;
 import com.gd.sakila.mapper.FilmMapper;
-import com.gd.sakila.vo.FilmList;
-import com.gd.sakila.vo.Page;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,32 +19,24 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class FilmService {
 	@Autowired FilmMapper filmMapper;
+	@Autowired CategoryMapper categoryMapper;
 	
-	public Map<String, Object> getFilmList(int currentPage, int rowPerPage, String searchWord){
-		log.debug("▶▶▶▶▶ getFilmList() currentPage: " + currentPage);
-		log.debug("▶▶▶▶▶ getFilmList() rowPerPage: " + rowPerPage);
-		log.debug("▶▶▶▶▶ getFilmList() searchWord: " + searchWord);
+	public Map<String, Object> getFilmList(String categoryName){
+		log.debug("▶▶▶▶▶ getFilmList() categoryName: " + categoryName); // 16개 또는 널이 넘어온다
 		
-		int filmTotal = filmMapper.selectFilmTotal(searchWord);
-		int lastPage = (int)(Math.ceil((double)filmTotal / rowPerPage));
-		log.debug("▶▶▶▶▶ getFilmList() filmTotal: " + filmTotal);
-		log.debug("▶▶▶▶▶ getFilmList() lastPage: " + lastPage);
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("categoryName", categoryName);
 		
-		Page page = new Page();
-		page.setBeginRow((currentPage-1)*rowPerPage);
-		page.setRowPerPage(rowPerPage);
-		page.setSearchWord(searchWord);
+		List<Map<String, Object>> filmList = filmMapper.selectFilmList(paramMap);
+		List<String> categoryNameList = categoryMapper.selectCategoryNameList();
+		Map<String, Object> returnMap = new HashMap<>();
 		
-		List<FilmList> filmList = filmMapper.selectFilmList(page);
-		log.debug("▶▶▶▶▶ getFilmList() filmList: " + filmList);
+		returnMap.put("filmList", filmList);
+		returnMap.put("categoryNameList", categoryNameList);
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("lastPage", lastPage);
-		map.put("filmList", filmList);
-		
-		return map;
+		return returnMap;
 	}
-	
+
 	// map <-- film, filmCount
 	public Map<String, Object> getFilmOne(int filmId, int storeId){
 		Map<String, Object> paramMap = new HashMap<String, Object>();

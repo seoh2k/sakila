@@ -12,54 +12,69 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	console.log('document ready')
+	$('#btn').click(function(){
+		console.log('btn click!');
+		$('#filmForm').submit();
+	});
+});
+</script>
 </head>
 <body>
 <div class="container">
     <h1>getFilmList</h1>
-    
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>filmId</th>
-                <th>title</th>
-                <th>categoryName</th>
-                <th>description</th>
-                <th>releaseYear</th>
-                <th>languageId</th>
-                <th>rentalDuration</th>
-                <th>rentalRate</th>
-                <th>LENGTH</th>
-                <th>replacementCost</th>
-                <th>rating</th>
-                <th>specialFeatures</th>
-                <th>lastUpdate</th>
-                <th>actors</th>
-            </tr>
-        </thead>
-        <tbody>
-            <c:forEach var="f" items="${filmList}">
-                <tr>
-                    <td class="col-sm-1 text-center">${f.filmId}</td>
-                    <td class="col-sm-2 text-center">
-                    	<a href="${pageContext.request.contextPath}/admin/getFilmOne?filmId=${f.filmId}">${f.title}</a>
-                    </td>
-                    <td class="col-sm-2 text-center">${f.categoryName}</td>
-                    <td class="col-sm-1 text-center">${f.description}</td>
-                    <td class="col-sm-1 text-center">${f.releaseYear}</td>
-                    <td class="col-sm-1 text-center">${f.languageId}</td>
-                    <td class="col-sm-1 text-center">${f.rentalDuration}</td>
-                    <td class="col-sm-1 text-center">${f.rentalRate}</td>
-                    <td class="col-sm-2 text-center">${f.LENGTH}</td>
-                    <td class="col-sm-1 text-center">${f.replacementCost}</td>
-                    <td class="col-sm-1 text-center">${f.rating}</td>
-                    <td class="col-sm-1 text-center">${f.specialFeatures}</td>
-                    <td class="col-sm-1 text-center">${f.lastUpdate}</td>
-                    <td class="col-sm-1 text-center">${f.actors}</td>
-                </tr>
-            </c:forEach>
-        </tbody>
-    </table>
-
+	<!--  
+		1. 카테고리별
+		2. 가격별
+		3. 제목 검색
+		4. 등급별
+		5. 페이징
+		6. 배우 검색
+	 -->
+	<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
+	 
+	<form id="filmForm" action="${pageContext.request.contextPath}/admin/getFilmList" method="get">
+		category:
+		<select name="categoryName">
+			<option value="">카테고리 선택</option>
+			<c:forEach var="name" items="${categoryNameList}">
+				<c:if test="${name == categoryName}">
+					<option value="${name}" selected="selected">${name}</option>
+				</c:if>
+				<c:if test="${name != categoryName}">
+					<option value="${name}">${name}</option>
+				</c:if>
+			</c:forEach>
+		</select>
+		<button id="btn" type="button">검색</button>
+	</form>
+	
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>FID</th>
+				<th>title</th>
+				<th>category</th>
+				<th>price</th>
+				<th>rating</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="m" items="${filmList}">
+				<tr>
+					 <td class="col-sm-1 text-center">${m.FID}</td>
+					 <td class="col-sm-1 text-center">${m.title}</td>
+					 <td class="col-sm-1 text-center">${m.category}</td>
+					 <td class="col-sm-1 text-center">${m.price}</td>
+					 <td class="col-sm-1 text-center">${m.rating}</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	
     <!-- 검색어 입력창 -->
     <form action="getFilmList" method="get">
         <label for="searchWord">검색어(제목) :</label> 

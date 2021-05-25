@@ -19,29 +19,25 @@ import lombok.extern.slf4j.Slf4j;
 public class FilmController {
 	@Autowired FilmService filmService;
 	
+	@GetMapping("/getFilmList")
+	public String getFilmList(Model model, @RequestParam(name="categoryName", required = false) String categoryName) {
+		log.debug("▶▶▶▶▶ getFilmList categoryName: "+ categoryName);
+		
+		// 카테고리를 선택하지 않고 검색했을 때 
+		if(categoryName != null && categoryName.equals("")) {
+			categoryName = null;
+		}
+		
+		Map<String, Object> map = filmService.getFilmList(categoryName); // 16개 또는 null
+		model.addAttribute("filmList", map.get("filmList"));
+		model.addAttribute("categoryNameList", map.get("categoryNameList"));
+		model.addAttribute("categoryName", categoryName);
+		return "getFilmList";
+	}
+	
 	@GetMapping("/getFilmOne")
 	public String getFilmOne() {
 		filmService.getFilmOne(1, 1);
 		return "getFilmOne";
 	}
-	
-	@GetMapping("/getFilmList")
-	public String getFilmList(Model model, 
-												@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
-												@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage,
-												@RequestParam(value="searchWord", required = false) String searchWord) {
-		log.debug("▶▶▶▶▶ getFilmList currentPage: "+ currentPage);
-		log.debug("▶▶▶▶▶ getFilmList rowPerPage: "+ rowPerPage);
-		log.debug("▶▶▶▶▶ getFilmList searchWord: "+ searchWord);
-		
-		Map<String, Object> map = filmService.getFilmList(currentPage, rowPerPage, searchWord);
-		log.debug("▶▶▶▶▶ filmList map: "+ map);
-		
-		model.addAttribute("currentPage", currentPage);
-		model.addAttribute("searchWord", searchWord);
-		model.addAttribute("lastPage", map.get("lastPage"));
-		model.addAttribute("filmList", map.get("filmList"));
-		return "getFilmList";
-	}
-	
 }
