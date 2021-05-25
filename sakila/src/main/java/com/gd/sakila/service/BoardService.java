@@ -119,7 +119,7 @@ public class BoardService {
 	
 	// 1) 상세보기 + 2) 댓글 목록, 수정 폼
 	public Map<String, Object> getBoardOne(int boardId) { // 전체적으로 통일하기 위해서 만든다
-		log.debug("▶▶▶▶▶ modifyBoard param: " + boardId); 
+		log.debug("▶▶▶▶▶ getBoardOne boardId: " + boardId); 
 		// 1) 상세보기
 		Map<String, Object> boardMap = boardMapper.selectBoardOne(boardId);
 		log.debug("▶▶▶▶▶ boardMap: " + boardMap); 

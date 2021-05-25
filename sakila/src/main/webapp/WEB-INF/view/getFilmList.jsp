@@ -33,6 +33,7 @@ $(document).ready(function(){
 		4. 등급별
 		5. 페이징
 		6. 배우 검색
+		7. 타이틀 클릭시 상세보기
 	 -->
 	<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
 	 
@@ -49,6 +50,77 @@ $(document).ready(function(){
 				</c:if>
 			</c:forEach>
 		</select>
+		
+		price:
+		<select name="price">
+			<option value="0">가격 선택</option>
+			<c:if test="${price == 0.99}">
+				<option value="0.99" selected="selected">0.99</option>
+			</c:if>
+			<c:if test="${price != 0.99}">
+	        	<option value="0.99">0.99</option>
+	        </c:if>
+	        
+	        <c:if test="${price == 2.99}">
+	            <option value="2.99" selected="selected">2.99</option>
+	        </c:if>
+	        <c:if test="${price != 2.99}">
+	            <option value="2.99">2.99</option>
+	        </c:if>
+	        
+	        <c:if test="${price == 4.99}">
+	            <option value="4.99" selected="selected">4.99</option>
+	        </c:if>
+	        <c:if test="${price != 4.99}">
+	            <option value="4.99">4.99</option>
+	        </c:if>
+		</select>
+		
+		title:
+		<input type="text" id="title" name="title" value="${title}">
+		
+		rating:
+		<select name="rating">
+			<option value="">가격 선택</option>
+			<c:if test="${rating == 'PG'}">
+				<option value="PG" selected="selected">PG</option>
+			</c:if>
+			<c:if test="${rating != 'PG'}">
+	        	<option value="PG">PG</option>
+	        </c:if>
+	        
+	        <c:if test="${rating == 'NC-17'}">
+				<option value="NC-17" selected="selected">NC-17</option>
+			</c:if>
+			<c:if test="${rating != 'NC-17'}">
+	        	<option value="NC-17">NC-17</option>
+	        </c:if>
+	        
+	        <c:if test="${rating == 'R'}">
+				<option value="R" selected="selected">R</option>
+			</c:if>
+			<c:if test="${rating != 'R'}">
+	        	<option value="R">R</option>
+	        </c:if>
+	        
+	        <c:if test="${rating == 'PG-13'}">
+				<option value="PG-13" selected="selected">PG-13</option>
+			</c:if>
+			<c:if test="${rating != 'PG-13'}">
+	        	<option value="PG-13">PG-13</option>
+	        </c:if>
+	        
+	        <c:if test="${rating == 'G'}">
+				<option value="G" selected="selected">G</option>
+			</c:if>
+			<c:if test="${rating != 'G'}">
+	        	<option value="G">G</option>
+	        </c:if>
+		</select>
+		
+		actor:
+		<input type="text" id="actors" name="actors" value="${actors}">
+		
 		<button id="btn" type="button">검색</button>
 	</form>
 	
@@ -66,7 +138,7 @@ $(document).ready(function(){
 			<c:forEach var="m" items="${filmList}">
 				<tr>
 					 <td class="col-sm-1 text-center">${m.FID}</td>
-					 <td class="col-sm-1 text-center">${m.title}</td>
+					 <td class="col-sm-1 text-center"><a href="${pageContext.request.contextPath}/admin/getFilmOne?FID=${m.FID}">${m.title}</a></td>
 					 <td class="col-sm-1 text-center">${m.category}</td>
 					 <td class="col-sm-1 text-center">${m.price}</td>
 					 <td class="col-sm-1 text-center">${m.rating}</td>
@@ -74,13 +146,6 @@ $(document).ready(function(){
 			</c:forEach>
 		</tbody>
 	</table>
-	
-    <!-- 검색어 입력창 -->
-    <form action="getFilmList" method="get">
-        <label for="searchWord">검색어(제목) :</label> 
-        <input name="searchWord" type="text">
-        <button type="submit">검색</button>
-    </form>
     
     <ul class="pager">
         <c:if test="${currentPage > 1}">
