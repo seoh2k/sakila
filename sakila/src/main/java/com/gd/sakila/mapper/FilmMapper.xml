@@ -47,8 +47,8 @@
 			<if test="rating != null">
 				AND rating = #{rating}
 			</if>
-			<if test="searchActor != null">
-				actors LIKE CONCAT('%',#{searchWord},'%') <!-- 널이 들어가면 안된다. 차라리 공백이 들어간다. -->
+			<if test="actors != null">
+				AND actors LIKE CONCAT('%',#{actors},'%') <!-- 널이 들어가면 안된다. 차라리 공백이 들어간다. -->
 			</if>
 		</where>
 		ORDER BY FID ASC

@@ -47,13 +47,13 @@ public class FilmController {
 								@RequestParam(name="rating", required = false) String rating,
 								@RequestParam(name="currentPage", defaultValue="1") int currentPage,
 								@RequestParam(name="rowPerPage", defaultValue="10") int rowPerPage,
-								@RequestParam(name="searchActor", required=false) String searchActor) {
+								@RequestParam(name="actors", required=false) String actors) {
 		log.debug("▶▶▶▶▶ getFilmList categoryName: "+ categoryName);
 		log.debug("▶▶▶▶▶ getFilmList price: "+ price);
 		log.debug("▶▶▶▶▶ getFilmList title: "+ title);
 		log.debug("▶▶▶▶▶ getFilmList rating: "+ rating);
 		log.debug("▶▶▶▶▶ getFilmList currentPage: "+ currentPage);
-		log.debug("▶▶▶▶▶ getFilmList searchActor: "+ searchActor);
+		log.debug("▶▶▶▶▶ getFilmList actors: "+ actors);
 		
 		
 		// 카테고리를 선택하지 않고 검색했을 때 버그 수정
@@ -70,11 +70,11 @@ public class FilmController {
 		if(rating != null && rating.equals("")) {
 			rating = null;
 		}
-		if(searchActor != null && searchActor.equals("")) {
-			searchActor = null;
+		if(actors != null && actors.equals("")) {
+			actors = null;
 		}
 		
-		Map<String, Object> map = filmService.getFilmList(categoryName, price, title, rating, currentPage, rowPerPage, searchActor); // 16개 또는 null
+		Map<String, Object> map = filmService.getFilmList(categoryName, price, title, rating, currentPage, rowPerPage, actors); // 16개 또는 null
 		model.addAttribute("filmList", map.get("filmList"));
 		model.addAttribute("categoryNameList", map.get("categoryNameList"));
 		model.addAttribute("categoryName", categoryName);
@@ -85,7 +85,7 @@ public class FilmController {
 		model.addAttribute("beginRow", map.get("beginRow"));
 		model.addAttribute("lastPage", map.get("lastPage"));
 		model.addAttribute("lastPage", map.get("lastPage"));
-		model.addAttribute("searchActor", searchActor);
+		model.addAttribute("actors", actors);
 		
 		return "getFilmList";
 	}

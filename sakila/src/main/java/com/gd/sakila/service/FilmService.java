@@ -36,14 +36,14 @@ public class FilmService {
 	}
 	
 	public Map<String, Object> getFilmList(String categoryName, Double price, String title, String rating, 
-											int currentPage, int rowPerPage, String searchActor){
+											int currentPage, int rowPerPage, String actors){
 		log.debug("▶▶▶▶▶ getFilmList() categoryName: " + categoryName); // 16개 또는 널이 넘어온다
 		log.debug("▶▶▶▶▶ getFilmList() price: " + price);
 		log.debug("▶▶▶▶▶ getFilmList() title: " + title);
 		log.debug("▶▶▶▶▶ getFilmList() rating: " + rating);
 		log.debug("▶▶▶▶▶ getFilmList() currentPage: " + currentPage);
 		log.debug("▶▶▶▶▶ getFilmList() rowPerPage: " + rowPerPage);
-		log.debug("▶▶▶▶▶ getFilmList() searchActor: " + searchActor);
+		log.debug("▶▶▶▶▶ getFilmList() actors: " + actors);
 
 		Map<String, Object> paramMap = new HashMap<>();
 		int beginRow = (currentPage-1) * rowPerPage;
@@ -53,7 +53,7 @@ public class FilmService {
 		paramMap.put("rating", rating);
 		paramMap.put("beginRow", beginRow);
 		paramMap.put("rowPerPage", rowPerPage);
-		paramMap.put("searchActor", searchActor);
+		paramMap.put("actors", actors);
 		
 		int filmTotal = filmMapper.selectFilmTotal(paramMap);
 		int lastPage = filmTotal/rowPerPage;
@@ -70,7 +70,7 @@ public class FilmService {
 		returnMap.put("filmTotal", filmTotal);
 		returnMap.put("beginRow", beginRow);
 		returnMap.put("lastPage", lastPage);
-		returnMap.put("searchActor", searchActor);
+		returnMap.put("actors", actors);
 		
 		return returnMap;
 	}
