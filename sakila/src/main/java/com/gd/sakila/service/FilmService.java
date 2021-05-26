@@ -56,10 +56,13 @@ public class FilmService {
 		paramMap.put("actors", actors);
 		
 		int filmTotal = filmMapper.selectFilmTotal(paramMap);
+		log.debug("▶▶▶▶▶ getFilmList() filmTotal: " + filmTotal);
+
 		int lastPage = filmTotal/rowPerPage;
 		if(filmTotal % rowPerPage != 0) {
 			lastPage += 1;
 		}
+		log.debug("▶▶▶▶▶ getFilmList() lastPage: " + lastPage);
 		
 		List<Map<String, Object>> filmList = filmMapper.selectFilmList(paramMap);
 		List<String> categoryNameList = categoryMapper.selectCategoryNameList();
@@ -70,7 +73,6 @@ public class FilmService {
 		returnMap.put("filmTotal", filmTotal);
 		returnMap.put("beginRow", beginRow);
 		returnMap.put("lastPage", lastPage);
-		returnMap.put("actors", actors);
 		
 		return returnMap;
 	}

@@ -35,7 +35,9 @@ $(document).ready(function(){
 		6. 배우 검색
 		7. 타이틀 클릭시 상세보기
 	 -->
-	<a href="${pageContext.request.contextPath}/admin/getBoardList">게시판</a>
+	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getBoardList">boardList</a>
+	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
+    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
 	 
 	<form id="filmForm" action="${pageContext.request.contextPath}/admin/getFilmList" method="get">
 		category:

@@ -21,6 +21,9 @@
 <body>
 <div class="container">
     <h1>getStaffList</h1>
+    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getBoardList">boardList</a>
+    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a>
+    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
     <table class="table table-striped">
         <thead>
             <tr>
