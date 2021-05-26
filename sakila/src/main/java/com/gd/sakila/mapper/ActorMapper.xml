@@ -3,8 +3,8 @@
 <mapper namespace="com.gd.sakila.mapper.ActorMapper">
 	<insert id="insertActor" parameterType="com.gd.sakila.vo.Actor">
 		INSERT INTO actor(
-			first_name firstName,
-			last_name lastName
+			first_name,
+			last_name
 		) VALUES (
 			#{firstName},
 			#{lastName}
@@ -24,7 +24,7 @@
 				CONCAT(first_name, ' ', last_name) LIKE CONCAT('%', #{searchWord}, '%')
 			</if>
 		</where>
-		ORDER BY actor_id ASC
+		ORDER BY actor_id DESC
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	

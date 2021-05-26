@@ -21,7 +21,7 @@ public class ActorService {
 	@Autowired ActorMapper actorMapper;
 	
 	public int addActor(Actor actor) {
-		log.debug("actor: "+ actor);
+		log.debug("▶▶▶▶▶actor: "+ actor);
 		
 		return actorMapper.insertActor(actor);
 	}

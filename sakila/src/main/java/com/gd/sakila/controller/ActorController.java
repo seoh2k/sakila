@@ -25,8 +25,11 @@ public class ActorController {
 	public String addActor() {
 		return "addActor";
 	}
+	
 	@PostMapping("/addActor")
 	public String addActor(Actor actor) {
+		log.debug("addActor actor: "+actor);
+		actorService.addActor(actor);
 		return "redirect:/admin/getActorList";
 	}
 	
