@@ -25,6 +25,10 @@ public class FilmService {
 	@Autowired FilmMapper filmMapper;
 	@Autowired CategoryMapper categoryMapper;
 	
+	public List<Map<String, Object>> getFilmActorListByFilm(int filmId){
+		return filmMapper.selectFilmActorListByFilm(filmId);
+	}
+	
 	public Map<String, Object> getFilmOne(int FID) { // 전체적으로 통일하기 위해서 만든다
 		log.debug("▶▶▶▶▶ getFilmOne FID: " + FID); 
 		// 상세보기

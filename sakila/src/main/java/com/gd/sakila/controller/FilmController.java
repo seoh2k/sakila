@@ -1,5 +1,6 @@
 package com.gd.sakila.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,26 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class FilmController {
 	@Autowired FilmService filmService;
+	
+	@GetMapping("modifyFilmActor")
+	public String modifyFilmActor(@RequestParam(value = "filmId", required = true) int filmId,
+									@RequestParam(value = "ck") int[] ck) {
+		log.debug("▶▶▶▶▶modifyFilmActor filmId: " + filmId);
+		log.debug("▶▶▶▶▶modifyFilmActor ck length: " + ck.length);
+		// service - mapper
+		// delete from film_actor where film_id = #{filmId}
+		// for{ }
+		// insert into(actor_id, film_id) values(#{ck[0]}, #{filmId})
+		return "redirect:/admin/getFilmOne?FID="+filmId;
+	}
+	
+	@GetMapping("/getFilmActorListByFilm")
+	public String getFilmActorListByFilm(Model model,  @RequestParam(value = "filmId", required = true) int filmId) {
+		List<Map<String, Object>> list = filmService.getFilmActorListByFilm(filmId);
+		log.debug("list size() :"+list.size()); // 200
+		model.addAttribute("filmActorList", list);
+		return "getFilmActorListByFilm"; 
+	}
 	
 	@GetMapping("/getFilmOne")
 	public String getFilmOne(Model model, 

@@ -59,7 +59,7 @@
 					<td>${filmMap.replacementCost}</td>
 				</tr>
 				<tr>
-					<td>rating :</td>
+					<td>rating: </td>
 					<td>${filmMap.rating}</td>
 				</tr>
 				<tr>
@@ -71,7 +71,12 @@
 					<td>${filmMap.lastUpdate}</td>
 				</tr>
 				<tr>
-					<td>actors :</td>
+					<!-- getFilmActorListByFilm: 컨트롤러 -->
+					<td>
+						<a href="${pageContext.request.contextPath}/admin/getFilmActorListByFilm?filmId=${filmMap.filmId}">
+							<button type="button">출연배우 수정</button>
+						</a>actors :
+					</td>
 					<td>${filmMap.actors}</td>
 				</tr>
 				<tr>
