@@ -43,12 +43,12 @@ $(document).ready(function(){
 		category:
 		<select name="categoryName">
 			<option value="">카테고리 선택</option>
-			<c:forEach var="name" items="${categoryNameList}">
+			<c:forEach var="c" items="${categoryList}">
 				<c:if test="${name == categoryName}">
-					<option value="${name}" selected="selected">${name}</option>
+					<option value="${c.name}" selected="selected">${c.name}</option>
 				</c:if>
-				<c:if test="${name != categoryName}">
-					<option value="${name}">${name}</option>
+				<c:if test="${c.name != categoryName}">
+					<option value="${c.name}">${c.name}</option>
 				</c:if>
 			</c:forEach>
 		</select>
@@ -158,7 +158,7 @@ $(document).ready(function(){
         </c:if>
     </ul>
     <div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addFilmList">게시글 입력</a>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addFilm">게시글 입력</a>
     </div>
 </div>
 </body>

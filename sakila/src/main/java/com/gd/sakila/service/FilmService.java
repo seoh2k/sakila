@@ -11,10 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.CategoryMapper;
 import com.gd.sakila.mapper.FilmMapper;
-import com.gd.sakila.vo.Boardfile;
-import com.gd.sakila.vo.Comment;
+import com.gd.sakila.vo.Category;
 import com.gd.sakila.vo.Film;
-import com.gd.sakila.vo.Page;
+import com.gd.sakila.vo.FilmForm;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +23,30 @@ import lombok.extern.slf4j.Slf4j;
 public class FilmService {
 	@Autowired FilmMapper filmMapper;
 	@Autowired CategoryMapper categoryMapper;
+	
+	/*
+	 * param : film 입력 폼
+	 * return : 입력된 filmId 값
+	 */
+	
+	// CategoryService.class 로 이동해야 함
+	public List<Category> getCategoryList(){
+		return categoryMapper.selectCategoryList();
+	}
+	
+	public int addFilm(FilmForm filmForm) {
+		log.debug("▶▶▶▶▶ addFilm filmForm: " + filmForm); 
+		Film film = filmForm.getFilm();
+		log.debug("▶▶▶▶▶ addFilm film: " + film); 
+		filmMapper.insertFilm(film); // filmId가 생성된 후 film.setFilmId(생성된 값) 호출
+		
+		Map<String, Object> map = new HashMap<>(); // 맵 안에 categoryId, filmId 들어가야함
+		map.put("categoryId", filmForm.getCategory().getCategoryId());
+		map.put("filmId", film.getFilmId());
+		filmMapper.insertFilmCategory(map);
+		
+		return film.getFilmId();
+	}
 	
 	public List<Map<String, Object>> getFilmActorListByFilm(int filmId){
 		return filmMapper.selectFilmActorListByFilm(filmId);
@@ -69,11 +92,11 @@ public class FilmService {
 		log.debug("▶▶▶▶▶ getFilmList() lastPage: " + lastPage);
 		
 		List<Map<String, Object>> filmList = filmMapper.selectFilmList(paramMap);
-		List<String> categoryNameList = categoryMapper.selectCategoryNameList();
+		List<Category> categoryList = categoryMapper.selectCategoryList();
 		
 		Map<String, Object> returnMap = new HashMap<>();
 		returnMap.put("filmList", filmList);
-		returnMap.put("categoryNameList", categoryNameList);
+		returnMap.put("categoryList", categoryList);
 		returnMap.put("filmTotal", filmTotal);
 		returnMap.put("beginRow", beginRow);
 		returnMap.put("lastPage", lastPage);

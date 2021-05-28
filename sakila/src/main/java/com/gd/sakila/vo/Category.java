@@ -3,8 +3,8 @@ package com.gd.sakila.vo;
 import lombok.Data;
 
 @Data
-public class Language {
-   private int languageId;
+public class Category {
+   private int categoryId;
    private String name;
    private String lastUpdate;
 }

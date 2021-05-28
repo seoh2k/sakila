@@ -1,7 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.FilmMapper"> 
-
+	
+	<insert id="insertFilmCategory"
+			parameterType="java.util.Map">
+		INSERT INTO film_category(
+			film_id,
+			category_id
+		) VALUES(
+			#{filmId},
+			#{categoryId}
+		)			
+	</insert>
+	
+	<insert id="insertFilm"
+			parameterType="com.gd.sakila.vo.Film">
+		<!-- selectKey : insert 시에 autoincrement 기능이 가능하도록 함, 
+			insert를 실행하고 있을 때는 다른 쿼리가 실행되지 않도록 lock을 거는 기능 -->
+		<!-- selectKey사용: SELECT LAST_INSERT_ID()->마지막으로 입력된 값, order="AFTER" -> Insert 후에 Select 진행-->
+		<!-- 영화 추가 -->
+		<selectKey keyProperty="filmId" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID() 
+		</selectKey>	
+		INSERT INTO film(
+			title,
+			description,
+			release_year,
+			language_id,
+			original_language_id,
+			rental_duration,
+			rental_rate,
+			length,
+			replacement_cost,
+			rating,
+			special_features
+		) VALUES (
+			#{title},
+			#{description},
+			#{releaseYear},
+			#{languageId},
+			#{originalLanguageId},
+			#{rentalDuration},
+			#{rentalRate},
+			#{length},
+			#{replacementCost},
+			#{rating},
+			#{specialFeatures}
+		)	
+	</insert>
+	 <!-- insert 폼에서 받아온 정보들은 filmId를 제외하고 입력이 진행됨(매개변수에 filmId가 없기 때문에), 
+	 		selectKey를 통해서 select 된 key 값이 폼 입력이 진행되고 난 후에 filmId 자리에 입력되게 됨 -->
+	
 	<!-- 영화에 따른 배우 리스트 -->
 	<select id="selectFilmActorListByFilm"
 			parameterType="int"
