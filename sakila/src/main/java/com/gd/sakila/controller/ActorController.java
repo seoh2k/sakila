@@ -21,6 +21,16 @@ import lombok.extern.slf4j.Slf4j;
 public class ActorController {
 	@Autowired ActorService actorService;
 	
+	@PostMapping("/modifyFilmActor")
+	public String modifyFilmActor(@RequestParam(value="filmId", required= true) int filmId,
+									@RequestParam(value="ck", required= true) int[] ck) {
+		log.debug("▶▶▶▶▶ modifyFilmActor ck: "+ck);
+		log.debug("▶▶▶▶▶ modifyFilmActor filmId: "+filmId);
+		
+		actorService.modifyFilmActor(filmId, ck);
+		return "redirect:/admin/getFilmOne?filmId="+filmId;
+	}
+	
 	@GetMapping("/addActor")
 	public String addActor() {
 		return "addActor";

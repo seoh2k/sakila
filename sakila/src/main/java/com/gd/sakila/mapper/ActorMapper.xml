@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.ActorMapper">
 	
+	<!-- 배우 입력 -->
+	<insert id="insertFilmActorByFilmOne" parameterType="Integer">
+		INSERT INTO film_actor(
+			film_id,
+			actor_id
+		) VALUES (
+			#{filmId},
+			#{actorId}
+		)
+	</insert>
+	
+	<!-- 배우 삭제 -->
+	<delete id="deleteFilmActorByFilmOne" parameterType="Integer">
+		DELETE FROM film_actor
+		WHERE film_Id = #{filmId}
+	</delete>
+	
 	<insert id="insertActor" parameterType="com.gd.sakila.vo.Actor">
 		INSERT INTO actor(
 			first_name,

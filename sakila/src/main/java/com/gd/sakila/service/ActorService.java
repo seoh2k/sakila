@@ -20,6 +20,22 @@ import lombok.extern.slf4j.Slf4j;
 public class ActorService {
 	@Autowired ActorMapper actorMapper;
 	
+	public int modifyFilmActor(int filmId, int[] actorId) {
+		log.debug("▶▶▶▶▶ modifyFilmActor actorId: "+actorId);
+		log.debug("▶▶▶▶▶ modifyFilmActor filmId: "+filmId);
+		
+		// 배우 전체 삭제
+		int removeRow =actorMapper.deleteFilmActorByFilmOne(filmId);
+		log.debug("▶▶▶▶▶ modifyFilmActor removeRow: "+removeRow);
+		
+		int addRow = 0;
+		for(int i=0; i<actorId.length; i++) {
+			addRow = actorMapper.insertFilmActorByFilmOne(filmId, actorId[i]);
+		}
+		log.debug("▶▶▶▶▶ modifyFilmActor addRow: "+addRow);
+		return addRow;
+	}
+	
 	public int addActor(Actor actor) {
 		log.debug("▶▶▶▶▶actor: "+ actor);
 		
