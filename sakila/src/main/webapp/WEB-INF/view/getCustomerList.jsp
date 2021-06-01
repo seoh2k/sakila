@@ -15,7 +15,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>getBoardList</h1>
+    <h1>CustomerList</h1>
     <div>
         <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
     	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a>

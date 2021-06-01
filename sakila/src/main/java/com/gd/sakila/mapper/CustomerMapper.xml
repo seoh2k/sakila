@@ -6,7 +6,7 @@
 			ID,
 			name,
 			address,
-			'zip code' zipCode,
+			`zip code` zipCode,
 			phone,
 			city, 
 			country,
