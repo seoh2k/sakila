@@ -2,15 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.CustomerMapper">
 	<select id="selectCustomerList" parameterType="java.util.Map" resultType="com.gd.sakila.vo.CustomerList">
-		SELECT *
+		SELECT 
+			ID,
+			name,
+			address,
+			'zip code' zipCode,
+			phone,
+			city, 
+			country,
+			SID
 		FROM customer_list
+		<where>
+			<if test="searchWord != null">
+				name LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	
 	<select id="selectCustomerTotal" parameterType="String" resultType="Integer">
-		SELECT COUNT(*) FROM board <!-- 기본키보다 *가 빠르다 -->
+		SELECT COUNT(*) FROM customer_list <!-- 기본키보다 *가 빠르다 -->
 		<where>
 			<if test="searchWord != null">
-				name LIKE CONCAT('%',#{searchWord},'%') <!-- 널이 들어가면 안된다. 차라리 공백이 들어간다. -->
+				name LIKE CONCAT('%', #{searchWord}, '%') <!-- 널이 들어가면 안된다. 차라리 공백이 들어간다. -->
 			</if>
 		</where>
 	</select>

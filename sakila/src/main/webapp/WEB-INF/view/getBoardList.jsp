@@ -21,6 +21,7 @@
         <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
     	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a>
     	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
+    	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a>
     </div>
         
 

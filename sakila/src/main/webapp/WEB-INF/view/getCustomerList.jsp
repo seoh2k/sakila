@@ -29,7 +29,7 @@
                 <th>ID</th>
                 <th>name</th>
                 <th>address</th>
-                <th>ZIPcode</th>
+                <th>zip code</th>
                 <th>phone</th>
                 <th>city</th>
                 <th>country</th>
@@ -42,7 +42,7 @@
                 	<td>${c.ID}</td>
                 	<td>${c.name}</td>
                 	<td>${c.address}</td>
-                	<td>${c.ZIPcode}</td>
+                	<td>${c.zipCode}</td>
                 	<td>${c.phone}</td>
                 	<td>${c.city}</td>
                 	<td>${c.country}</td>
@@ -53,11 +53,13 @@
     </table>
     
     <!-- 검색어 입력창 -->
-    <form action="/getCustomerList" method="get">
-        <label for="searchWord">검색어(제목) :</label> 
-        <input name="searchWord" type="text">
-        <button type="submit">검색</button>
-    </form>
+    <div class="text-center">
+	    <form action="${pageContext.request.contextPath}/admin/getCustomerList" method="get">
+	        <label for="searchWord">검색어(제목) :</label> 
+	        <input name="searchWord" type="text">
+	        <button type="submit">검색</button>
+	    </form>
+	</div>
     
     <ul class="pager">
         <c:if test="${currentPage > 1}">
