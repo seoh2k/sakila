@@ -19,6 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerService {
 	@Autowired CustomerMapper customerMapper;
 	
+	public List<Map<String, Object>> getBlackCustomerList(){
+		return customerMapper.selectBlackCustomerList();
+	}
+	
 	public List<CustomerList> getCustomerList(Map<String, Object> map){
 		log.debug("▶▶▶▶▶ getCustomerList() map: "+map);
 		

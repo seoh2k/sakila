@@ -41,7 +41,9 @@ public class CustomerController {
 		map.put("searchWord", searchWord);
 		
 		List<CustomerList> customerList = customerService.getCustomerList(map);
+		List<Map<String, Object>> blackCustomerList = customerService.getBlackCustomerList();
 		model.addAttribute("customerList", customerList);
+		model.addAttribute("blackCustomerList", blackCustomerList);
 		model.addAttribute("currentPage", currentPage);
 		model.addAttribute("rowPerPage", rowPerPage);
 		model.addAttribute("searchWord", searchWord);

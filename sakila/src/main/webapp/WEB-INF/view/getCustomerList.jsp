@@ -21,7 +21,25 @@
     	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a>
     	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
     </div>
-        
+	
+	<table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>name</th>
+                <th>overdue</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="b" items="${blackCustomerList}">
+                <tr>
+                	<td>${b.ID}</td>
+                	<td>${b.name}</td>
+                	<td>${b.overdue}</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>   
 
     <table class="table table-striped">
         <thead>
@@ -33,6 +51,7 @@
                 <th>phone</th>
                 <th>city</th>
                 <th>country</th>
+                <th>notes</th>
                 <th>SID</th>
             </tr>
         </thead>
@@ -46,6 +65,7 @@
                 	<td>${c.phone}</td>
                 	<td>${c.city}</td>
                 	<td>${c.country}</td>
+                	<td>${c.notes}</td>
                 	<td>${c.SID}</td>
                 </tr>
             </c:forEach>
