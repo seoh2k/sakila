@@ -25,14 +25,15 @@ $(document).ready(function(){
 </head>
 <body>
 <div class="container">
-    <h1>CustomerList</h1>
+    <h1>InventoryList</h1>
     <div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
-    	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a>
-    	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
-    	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a>
-    	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a>
-    	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getBoardList">BoardList</a>
+        <a href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a>
     </div>
 	
 	<form id="inventoryForm" action="${pageContext.request.contextPath}/admin/getInventoryList" method="get">
@@ -73,7 +74,7 @@ $(document).ready(function(){
             <c:forEach var="il" items="${inventoryList}">
                 <tr>
                 	<td>${il.storeId}</td>
-                	<td>${il.title}</td>
+                	<td><a href="${pageContext.request.contextPath}/admin/getFilmOne?FID=${il.filmId}">${il.title}</a></td>
                 	<td>${il.totalInventory}</td>
                 	<td>${il.rental}</td>
                 	<td>${il.stock}</td>

@@ -2,11 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.InventoryMapper">
 	<select id="selectInventoryList" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT i.store_id storeId, 
-		       f.title title, 
-		       COUNT(*) AS totalInventory,
-			   SUM(NOT inventory_in_stock(i.inventory_id)) AS rental, 
-			   SUM(inventory_in_stock(i.inventory_id)) AS stock
+		SELECT 
+			f.film_id filmId,
+			i.store_id storeId, 
+		    f.title title, 
+		    COUNT(*) AS totalInventory,
+			SUM(NOT inventory_in_stock(i.inventory_id)) AS rental, 
+			SUM(inventory_in_stock(i.inventory_id)) AS stock
 		FROM film f, inventory i
 		WHERE f.film_id = i.film_id 
 			<if test="searchWord != null">

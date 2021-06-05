@@ -25,12 +25,17 @@ $(document).ready(function(){
 </head>
 <body>
 <div class="container">
-    <h1>getActorList</h1>
+    <h1>ActorList</h1>
     <div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getBoardList">boardList</a>
-		<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
-	    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getBoardList">BoardList</a>
+        <a href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a>
     </div>
+    
     <table class="table table-striped">
         <thead>
             <tr>

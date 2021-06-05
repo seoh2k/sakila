@@ -17,11 +17,16 @@
 <div class="container">
     <h1>CustomerList</h1>
     <div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
-    	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a>
-    	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getBoardList">BoardList</a>
+        <a href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a>
     </div>
-	
+    
+	<h3>blackCustomerList</h3>
 	<table class="table table-striped">
         <thead>
             <tr>
@@ -40,7 +45,8 @@
             </c:forEach>
         </tbody>
     </table>   
-
+	
+	<h3>customerList</h3>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -89,9 +95,6 @@
             <li class="next"><a href="${pageContext.request.contextPath}/admin/getCustomerList?currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>
         </c:if>
     </ul>
-    <div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addCustomer">게시글 입력</a>
-    </div>
 </div>
 </body>
 </html>

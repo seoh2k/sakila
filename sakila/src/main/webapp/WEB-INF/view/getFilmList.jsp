@@ -25,7 +25,7 @@ $(document).ready(function(){
 </head>
 <body>
 <div class="container">
-    <h1>getFilmList</h1>
+    <h1>FilmList</h1>
 	<!--  
 		1. 카테고리별
 		2. 가격별
@@ -35,9 +35,15 @@ $(document).ready(function(){
 		6. 배우 검색
 		7. 타이틀 클릭시 상세보기
 	 -->
-	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getBoardList">boardList</a>
-	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
-    <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
+	<div>
+    	<a href="${pageContext.request.contextPath}/admin/getBoardList">BoardList</a>
+        <a href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a>
+    </div>
 	 
 	<form id="filmForm" action="${pageContext.request.contextPath}/admin/getFilmList" method="get">
 		category:
