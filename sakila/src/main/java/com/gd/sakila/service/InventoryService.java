@@ -18,7 +18,7 @@ public class InventoryService {
 	@Autowired InventoryMapper inventoryMapper;
 	
 	public List<Map<String, Object>> getInventoryList(Map<String, Object> map){
-		log.debug("▶▶▶▶▶ getInventoryList() storeId: "+map);
+		log.debug("▶▶▶▶▶ getInventoryList() map: "+map);
 		return inventoryMapper.selectInventoryList(map);
 	}
 	

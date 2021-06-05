@@ -23,6 +23,7 @@
     	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
     	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a>
     	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a>
+    	<a class="btn btn-default" href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a>
     </div>
         
 
