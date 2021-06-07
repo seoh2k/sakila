@@ -19,6 +19,12 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerService {
 	@Autowired CustomerMapper customerMapper;
 	
+	// 고객 상세보기
+	public Map<String, Object> getCustomerOne(Integer ID){
+		log.debug("▶▶▶▶▶ getCustomerOne() ID: "+ID);
+		return customerMapper.selectCustomerOne(ID);
+	}
+	
 	public List<Map<String, Object>> getBlackCustomerList(){
 		return customerMapper.selectBlackCustomerList();
 	}

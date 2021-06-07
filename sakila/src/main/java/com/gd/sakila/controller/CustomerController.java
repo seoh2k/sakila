@@ -22,6 +22,20 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerController {
 	@Autowired CustomerService customerService;
 	
+	@GetMapping("/getCustomerOne")
+	public String getCustomerOne(Model model, 
+			@RequestParam(value="ID", required = true) Integer ID) {
+		log.debug("▶▶▶▶▶ getCustomerOne() ID: "+ID);
+		
+		Map<String, Object> map = customerService.getCustomerOne(ID);
+		log.debug("▶▶▶▶▶ getCustomerOne() map: "+map);
+		
+		model.addAttribute("map", map);
+		model.addAttribute("ID", ID);
+		
+		return "getCustomerOne";
+	}
+	
 	@GetMapping("/getCustomerList")
 	public String getCustomerList(Model model,
 									@RequestParam(value="currentPage", defaultValue = "1") int currentPage,

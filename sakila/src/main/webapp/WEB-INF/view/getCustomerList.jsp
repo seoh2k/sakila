@@ -39,7 +39,7 @@
             <c:forEach var="b" items="${blackCustomerList}">
                 <tr>
                 	<td>${b.ID}</td>
-                	<td>${b.name}</td>
+                	<td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${b.ID}">${b.name}</a></td>
                 	<td>${b.overdue}</td>
                 </tr>
             </c:forEach>
@@ -52,12 +52,7 @@
             <tr>
                 <th>ID</th>
                 <th>name</th>
-                <th>address</th>
-                <th>zip code</th>
                 <th>phone</th>
-                <th>city</th>
-                <th>country</th>
-                <th>notes</th>
                 <th>SID</th>
             </tr>
         </thead>
@@ -65,13 +60,8 @@
             <c:forEach var="c" items="${customerList}">
                 <tr>
                 	<td>${c.ID}</td>
-                	<td>${c.name}</td>
-                	<td>${c.address}</td>
-                	<td>${c.zipCode}</td>
+                	<td><a href="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${c.ID}">${c.name}</a></td>
                 	<td>${c.phone}</td>
-                	<td>${c.city}</td>
-                	<td>${c.country}</td>
-                	<td>${c.notes}</td>
                 	<td>${c.SID}</td>
                 </tr>
             </c:forEach>

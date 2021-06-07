@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.CustomerMapper">
+	<!-- 고객 상세보기 -->
+	<select id="selectCustomerOne" parameterType="Integer" resultType="map">
+		SELECT 
+			ID,
+			name,
+			address,
+			`zip code` zipCode,
+			phone,
+			city, 
+			country,
+			notes,
+			SID
+		FROM customer_list
+		WHERE ID = #{ID}
+	</select>
+	
 	<!-- 블랙리스트 -->
 	<select id="selectBlackCustomerList" resultType="java.util.Map">
 		SELECT 
@@ -21,12 +37,7 @@
 		SELECT 
 			ID,
 			name,
-			address,
-			`zip code` zipCode,
 			phone,
-			city, 
-			country,
-			notes,
 			SID
 		FROM customer_list
 		<where>

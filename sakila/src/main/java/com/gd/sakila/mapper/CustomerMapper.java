@@ -9,8 +9,14 @@ import com.gd.sakila.vo.CustomerList;
 
 @Mapper
 public interface CustomerMapper {
+	// 고객 상세보기
+	Map<String, Object> selectCustomerOne(Integer ID);
+	// 블랙리스트
 	List<Map<String, Object>> selectBlackCustomerList();
+	// 고객 리스트
 	List<CustomerList> selectCustomerList(Map<String, Object> map);
+	// 페이징
 	int selectCustomerTotal(String searchWord);
+	// 휴면고객
 	int updateCustomerActiveByScheduler();
 }
