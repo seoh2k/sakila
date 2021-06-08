@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.CustomerMapper;
+import com.gd.sakila.vo.Customer;
 import com.gd.sakila.vo.CustomerList;
 import com.gd.sakila.vo.Page;
 
@@ -19,28 +20,38 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerService {
 	@Autowired CustomerMapper customerMapper;
 	
+	// 고객 추가
+	public int addCustomer(Customer customer) {
+		log.debug("▶▶▶▶▶ addCustomer() customer: "+customer);
+		return customerMapper.insertCustomer(customer);
+	}
+	
 	// 고객 상세보기
 	public Map<String, Object> getCustomerOne(Integer ID){
 		log.debug("▶▶▶▶▶ getCustomerOne() ID: "+ID);
 		return customerMapper.selectCustomerOne(ID);
 	}
 	
+	// 블랙리스트
 	public List<Map<String, Object>> getBlackCustomerList(){
 		return customerMapper.selectBlackCustomerList();
 	}
 	
+	// 고객 리스트
 	public List<CustomerList> getCustomerList(Map<String, Object> map){
 		log.debug("▶▶▶▶▶ getCustomerList() map: "+map);
 		
 		return customerMapper.selectCustomerList(map);
 	}
 	
+	// 페이징
 	public int getCustomerTotal(String searchWord) {
 		log.debug("▶▶▶▶▶ getCustomerTotal() searchWord: "+searchWord);
 		
 		return customerMapper.selectCustomerTotal(searchWord);
 	}
 	
+	// 휴면 고객 수정
 	public void modifyCustomerActiveByScheduler() {
 		log.debug("▶▶▶▶▶ modifyCustomerActiveByScheduler() 실행");
 		int row = customerMapper.updateCustomerActiveByScheduler();

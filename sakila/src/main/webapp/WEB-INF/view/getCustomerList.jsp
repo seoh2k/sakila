@@ -85,6 +85,10 @@
             <li class="next"><a href="${pageContext.request.contextPath}/admin/getCustomerList?currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>
         </c:if>
     </ul>
+    
+    <div>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addCustomer">게시글 입력</a>
+    </div>
 </div>
 </body>
 </html>

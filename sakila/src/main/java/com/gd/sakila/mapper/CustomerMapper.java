@@ -5,10 +5,13 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.gd.sakila.vo.Customer;
 import com.gd.sakila.vo.CustomerList;
 
 @Mapper
 public interface CustomerMapper {
+	// 고객 추가
+	int insertCustomer(Customer customer);
 	// 고객 상세보기
 	Map<String, Object> selectCustomerOne(Integer ID);
 	// 블랙리스트

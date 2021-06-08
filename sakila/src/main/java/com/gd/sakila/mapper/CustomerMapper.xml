@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.CustomerMapper">
+	<!--  고객 추가 -->
+	<insert id="insertCustomer" parameterType="com.gd.sakila.vo.Customer">
+		INSERT INTO customer(
+			store_id,
+			first_name,
+			last_name,
+			email,
+			address_id,
+			active,
+			create_date
+		) VALUES (
+			#{storeId},
+			#{firstName},
+			#{lastName},
+			#{email},
+			#{addressId},
+			#{active},
+			NOW()
+		)
+	</insert>
+	
 	<!-- 고객 상세보기 -->
 	<select id="selectCustomerOne" parameterType="Integer" resultType="map">
 		SELECT 
@@ -45,6 +66,7 @@
 				name LIKE CONCAT('%', #{searchWord}, '%')
 			</if>
 		</where>
+		ORDER BY ID DESC <!-- 페이징 전에 -->
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
 	

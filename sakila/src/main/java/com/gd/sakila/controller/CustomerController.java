@@ -4,14 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.CustomerService;
+import com.gd.sakila.vo.Customer;
 import com.gd.sakila.vo.CustomerList;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +25,18 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class CustomerController {
 	@Autowired CustomerService customerService;
+	
+	@GetMapping("/addCustomer")
+	public String addCustomer() {
+		return "addCustomer"; // 포워딩
+	}
+	
+	@PostMapping("/addCustomer")
+	public String addCustomer(Customer customer) {
+		log.debug("▶▶▶▶▶ addCustomer() customer: "+customer);
+		customerService.addCustomer(customer);
+		return "redirect:/admin/getCustomerList";
+	}
 	
 	@GetMapping("/getCustomerOne")
 	public String getCustomerOne(Model model, 
