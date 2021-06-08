@@ -164,7 +164,7 @@ $(document).ready(function(){
         </c:if>
     </ul>
     <div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addFilm">게시글 입력</a>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addFilm">영화 입력</a>
     </div>
 </div>
 </body>

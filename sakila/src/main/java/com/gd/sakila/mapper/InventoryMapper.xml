@@ -17,7 +17,7 @@
 			<if test="storeId != null">
         		AND i.store_id = #{storeId}
 			</if>
-		GROUP BY i.film_id, i.store_id
+		GROUP BY i.film_id, i.store_id 
 		LIMIT #{beginRow}, #{rowPerPage}
 	</select>
    

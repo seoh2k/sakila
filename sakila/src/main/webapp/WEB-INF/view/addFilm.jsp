@@ -4,12 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>addFilm</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <!-- jquery를 사용하기위한 CDN주소 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
@@ -79,13 +81,13 @@ $(document).ready(function(){
             <tr>
                <td>rentalDuration</td>
                <td>
-                  <input type="text" value="3" name="film.rentalDuration" id="rentalDuration" class="form-control">               
+                  <input type="text" name="film.rentalDuration" id="rentalDuration" class="form-control">               
                </td>
             </tr>
             <tr>
                <td>rentalRate</td>
                <td>
-                  <input type="text" value="4.9" name="film.rentalRate" id="rentalRate" class="form-control">
+                  <input type="text" name="film.rentalRate" id="rentalRate" class="form-control">
                </td>
             </tr>
             <tr>
@@ -97,7 +99,7 @@ $(document).ready(function(){
             <tr>
                <td>replacementCost</td>
                <td>
-                  <input type="text" value="19.99" name="film.replacementCost" id="replacementCost" class="form-control">
+                  <input type="text" name="film.replacementCost" id="replacementCost" class="form-control">
                </td>
             </tr>
             <tr>

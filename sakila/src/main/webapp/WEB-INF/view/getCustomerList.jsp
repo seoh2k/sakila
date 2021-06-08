@@ -87,7 +87,7 @@
     </ul>
     
     <div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addCustomer">게시글 입력</a>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addCustomer">고객 입력</a>
     </div>
 </div>
 </body>
