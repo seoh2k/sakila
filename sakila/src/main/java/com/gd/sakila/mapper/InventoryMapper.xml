@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.InventoryMapper">
+	<!-- 재고추가 -->
+	<insert id="insertInventory" parameterType="java.util.Map">
+		INSERT INTO inventory(
+			film_id,
+			store_id
+		)VALUES(
+			#{filmId},
+			#{storeId}
+		)
+	</insert>
+
 	<select id="selectInventoryList" parameterType="java.util.Map" resultType="java.util.Map">
 		SELECT 
 			f.film_id filmId,

@@ -92,7 +92,7 @@ $(document).ready(function(){
         </c:if>
     </ul>
     <div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addInventory">게시글 입력</a>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addInventory">재고 추가</a>
     </div>
 </div>
 </body>
