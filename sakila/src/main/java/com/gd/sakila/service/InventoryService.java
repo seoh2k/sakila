@@ -17,6 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 public class InventoryService {
 	@Autowired InventoryMapper inventoryMapper;
 	
+	public int addInventory(Map<String, Object> map) {
+		log.debug("▶▶▶▶▶ addInventory() map: "+map);
+		return inventoryMapper.insertInventory(map);
+	}
+	
 	public List<Map<String, Object>> getInventoryList(Map<String, Object> map){
 		log.debug("▶▶▶▶▶ getInventoryList() map: "+map);
 		return inventoryMapper.selectInventoryList(map);

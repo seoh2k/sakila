@@ -24,6 +24,11 @@ public class FilmService {
 	@Autowired FilmMapper filmMapper;
 	@Autowired CategoryMapper categoryMapper;
 	
+	// film title List
+	public List<Map<String,Object>> getFilmTitleList(){
+		return filmMapper.selectFilmTitleList();
+	}
+	
 	/*
 	 * param : film 입력 폼
 	 * return : 입력된 filmId 값

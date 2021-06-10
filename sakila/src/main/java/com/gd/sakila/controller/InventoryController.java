@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,6 +21,28 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class InventoryController {
 	@Autowired InventoryService inventoryService;
+	
+	@GetMapping("/addInventory")
+	public String addInventory() {
+		return "addInventory";
+	}
+	
+	@PostMapping("/addInventory")
+	public String addInventory(
+				@RequestParam(value="filmId", required = false) Integer filmId,
+				@RequestParam(value="storeId", required = false) Integer storeId) {
+		log.debug("▶▶▶▶▶ addInventory() filmId: "+filmId);
+		log.debug("▶▶▶▶▶ addInventory() storeId: "+storeId);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("filmId", filmId);
+		map.put("storeId", storeId);
+		
+		int returnMap = inventoryService.addInventory(map);
+		log.debug("▶▶▶▶▶ addInventory() returnMap: "+returnMap);
+		
+		return "redirect:/admin/getInventoryList";
+	}
 	
 	@GetMapping("/getInventoryList")
 	public String getInventoryList(Model model, 
