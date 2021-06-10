@@ -78,7 +78,18 @@
 </head>
 <body>
     <div class="container">
-        <h1>BOARD ADD(spring mvc 방식)</h1>
+        <h1>addBoard</h1>
+        
+        <div>
+	    	<a href="${pageContext.request.contextPath}/admin/getBoardList">BoardList</a>
+	        <a href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
+	    	<a href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a>
+	    	<a href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
+	    	<a href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a>
+	    	<a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a>
+	    	<a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a>
+	    </div>
+    
         <form id="addForm" 
         		action="${pageContext.request.contextPath}/admin/addBoard" 
         		method="post" 

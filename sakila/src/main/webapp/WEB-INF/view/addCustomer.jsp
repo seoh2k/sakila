@@ -60,7 +60,11 @@ $(document).ready(function(){
             <tr>
                <td>addressId</td>
                <td>
-                  <input type="text" name="addressId" id="addressId" class="form-control">
+                  <select name="addressId" id ="addressId" class="form-control">
+                  	<c:forEach var="a" begin="1" end="605" step="1">
+                  		<option value="${a}">${a}</option>
+                  	</c:forEach>
+                  </select>
                </td>
             </tr>
             <tr>

@@ -1,7 +1,5 @@
 package com.gd.sakila.vo;
 
-import java.util.Set;
-
 import lombok.Data;
 
 @Data

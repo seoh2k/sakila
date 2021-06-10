@@ -22,6 +22,34 @@ import lombok.extern.slf4j.Slf4j;
 public class InventoryController {
 	@Autowired InventoryService inventoryService;
 	
+	@GetMapping("/removeInventory")
+	public String removeInventory(Model model,
+				@RequestParam(value="inventoryId", required = false) Integer inventoryId) {
+		log.debug("▶▶▶▶▶removeInventory inventoryId: "+inventoryId);
+		
+		model.addAttribute("inventoryId", inventoryId);
+		
+		return "removeInventory";
+	}
+	
+	@PostMapping("/removeInventory")
+	public String removeInventory(
+					@RequestParam(value="inventoryId", required = false) Integer inventoryId,
+					@RequestParam(value="filmId", required = false) Integer filmId,
+					@RequestParam(value="storeId", required = false) Integer storeId) {
+		log.debug("▶▶▶▶▶removeInventory inventoryId: "+inventoryId);
+		log.debug("▶▶▶▶▶removeInventory filmId: "+filmId);
+		log.debug("▶▶▶▶▶removeInventory storeId: "+storeId);
+		
+		int row = inventoryService.removeInventory(inventoryId);
+		log.debug("▶▶▶▶▶removeInventory row: "+row);
+		
+		if(row == 0) {
+			return "redirect:/admin/removeInventory";
+		} 
+		return "redirect:/admin/getInventoryList"; // 리다이렉트
+	}
+	
 	@GetMapping("/addInventory")
 	public String addInventory() {
 		return "addInventory";

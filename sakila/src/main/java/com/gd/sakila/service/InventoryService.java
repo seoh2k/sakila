@@ -17,6 +17,17 @@ import lombok.extern.slf4j.Slf4j;
 public class InventoryService {
 	@Autowired InventoryMapper inventoryMapper;
 	
+	// 영화별 재고 리스트
+	public List<Map<String,Object>> getInventoryIdList(int filmId){
+		log.debug("▶▶▶▶▶ getFilmTitleList() inventoryId: "+filmId);
+		return inventoryMapper.selectInventoryIdList(filmId);
+	}
+	
+	public int removeInventory(int inventoryId) {
+		log.debug("▶▶▶▶▶ removeInventory() map: "+inventoryId);
+		return inventoryMapper.deleteInventory(inventoryId);
+	}
+	
 	public int addInventory(Map<String, Object> map) {
 		log.debug("▶▶▶▶▶ addInventory() map: "+map);
 		return inventoryMapper.insertInventory(map);

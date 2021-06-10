@@ -93,6 +93,7 @@ $(document).ready(function(){
     </ul>
     <div>
         <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addInventory">재고 추가</a>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/removeInventory">재고 삭제</a>
     </div>
 </div>
 </body>
