@@ -10,6 +10,8 @@ import com.gd.sakila.vo.Film;
 
 @Mapper
 public interface FilmMapper {
+	// 영화 대여 시 매출
+	Map<String, Object> selectAmount();
 	// 영화 제목 리스트
 	List<Map<String, Object>> selectFilmTitleList();
 	

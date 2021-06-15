@@ -10,6 +10,8 @@ import com.gd.sakila.vo.CustomerList;
 
 @Mapper
 public interface CustomerMapper {
+	// 영화 대여
+	int insertRental(Map<String, Object> map);
 	// 고객 추가
 	int insertCustomer(Customer customer);
 	// 고객 상세보기

@@ -56,6 +56,10 @@
 				</tr>
 			</tbody>
 		</table>
+		
+		<div>
+	        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addRental?customerId=${map.ID}">영화 대여</a>
+	    </div>
 </div>   
 </body>
 </html>

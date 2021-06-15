@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gd.sakila.mapper.CustomerMapper;
+import com.gd.sakila.mapper.FilmMapper;
 import com.gd.sakila.vo.Customer;
 import com.gd.sakila.vo.CustomerList;
 import com.gd.sakila.vo.Page;
@@ -19,6 +20,20 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 public class CustomerService {
 	@Autowired CustomerMapper customerMapper;
+	@Autowired FilmMapper filmMapper;
+	
+	
+	// 영화 대여
+	public int addRental(Map<String, Object> map) {
+		log.debug("▶▶▶▶▶ addRental() map: "+map);
+		
+		int invnetoryId = (Integer)map.get(invnetoryId);
+				
+		double amount = filmMapper.selectAmount(invnetoryId);
+		log.debug("▶▶▶▶▶ addRental() amount: "+amount);
+		
+		return customerMapper.insertRental(map);
+	}
 	
 	// 고객 추가
 	public int addCustomer(Customer customer) {

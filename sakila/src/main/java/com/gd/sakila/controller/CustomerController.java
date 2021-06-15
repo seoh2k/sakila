@@ -26,6 +26,38 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomerController {
 	@Autowired CustomerService customerService;
 	
+	// 영화 대여
+	@GetMapping("/addRental")
+	public String addRental(Model model,
+			@RequestParam(value="customerId", required = true) Integer customerId) {
+		
+		log.debug("▶▶▶▶▶ addRental() customerId: " + customerId);
+		
+		model.addAttribute("customerId",customerId);
+		
+		return "addRental";
+	}
+	
+	@PostMapping("/addRental")
+	public String addRental(
+			@RequestParam(value="inventoryId", required = true) Integer inventoryId,
+			@RequestParam(value="customerId", required = true) Integer customerId,
+			@RequestParam(value="staffId", required = true) Integer staffId) {
+		log.debug("▶▶▶▶▶ addRental() inventoryId: "+inventoryId);
+		log.debug("▶▶▶▶▶ addRental() customerId: "+customerId);
+		log.debug("▶▶▶▶▶ addRental() staffId: "+staffId);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("inventoryId", inventoryId);
+		map.put("customerId", customerId);
+		map.put("staffId", staffId);
+		
+		int row = customerService.addRental(map);
+		log.debug("▶▶▶▶▶ addRental() row: "+row);
+		
+		return "redirect:/admin/getCustomerList";
+	}
+	
 	@GetMapping("/addCustomer")
 	public String addCustomer() {
 		return "addCustomer"; // 포워딩

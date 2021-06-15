@@ -3,10 +3,12 @@
 <mapper namespace="com.gd.sakila.mapper.InventoryMapper">
 	<!-- 영화를 선택 시 해당 재고 -->
 	<select id="selectInventoryIdList" parameterType="int" resultType="map">
-		SELECT 
-			inventory_id inventoryId
-		FROM inventory
-		WHERE film_id = #{filmId}
+		SELECT inventory_id inventoryId
+          FROM inventory
+         WHERE inventory_id NOT IN (SELECT inventory_id
+							        FROM rental
+							        WHERE return_date IS NULL)
+			   AND film_id = #{filmId}
 	</select>
 	
 	<!-- 재고 삭제 -->

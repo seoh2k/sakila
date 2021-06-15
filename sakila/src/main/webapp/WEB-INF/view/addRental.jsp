@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>addCustomer</title>
+<title>addRental</title>
 <!-- bootstrap을 사용하기 위한 CDN주소 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -16,6 +16,35 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
+	$.ajax({
+      type:'get',
+      url:'/getFilmTitleList',
+      success: function(jsonData) {
+         $(jsonData).each(function(index, item) {
+            $('#filmId').append(
+               '<option value="'+item.film_id+'">'+item.title+'</option>'
+            );
+         });
+      }
+   });
+	
+	$('#filmId').change(function(){
+		console.log('inventoryId 목록');
+		$.ajax({
+			type:'get',
+			url:'/getInventoryIdList',
+			data:{filmId : $('#filmId').val()},
+			success: function(jsonData) {
+				$('#inventoryId').empty();
+				$(jsonData).each(function(index, item) {
+					$('#inventoryId').append(
+						'<option value="'+item.inventoryId+'">'+item.inventoryId+'</option>'
+					);
+				});
+			}
+		}); // 재고 id를 받아와서 inventoryId select 태그안에 option태그를 추가
+	});
+	
 	$('#btn').click(function(){
 		console.log('btn click!'); // 웹브라우저 콘솔에서 확인 가능
 		// 폼 유효성 검사 코드 추가
@@ -26,7 +55,7 @@ $(document).ready(function(){
 </head>
 <body>
 <div class="container">
-      <h1>addCustomer</h1>
+      <h1>addRental</h1>
       
       <div>
     	<a href="${pageContext.request.contextPath}/admin/getBoardList">BoardList</a>
@@ -38,51 +67,33 @@ $(document).ready(function(){
     	<a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a>
     </div>
     
-      <form id="addForm" method="post" action="${pageContext.request.contextPath}/admin/addCustomer">
+      <form id="addForm" method="post" action="${pageContext.request.contextPath}/admin/addRental">
          <table class="table table-hover">
+         	<tr>
+				<td>filmTitle: </td>
+				<td>
+					<select name="filmId" id="filmId" class="form-control"></select>
+				</td>
+			</tr>
             <tr>
-               <td>storeId</td>
+               <td>inventoryId</td>
                <td>
-                  <select name="storeId" id ="storeId" class="form-control">
-                     <option value="1">1</option>
-                     <option value="2">2</option>
-                  </select>
+                  <select name="inventoryId" id ="inventoryId" class="form-control"></select>
+               </td>
+            </tr>
+   			<tr>
+               <td>customerId</td>
+               <td>
+               	 <input type="text" name="customerId" value="${customerId}" readonly="readonly">
                </td>
             </tr>
             <tr>
-               <td>firstName</td>
+               <td>staffId</td>
                <td>
-                  <input type="text" name="firstName" id="firstName" class="form-control">
-               </td>
-            </tr>
-            <tr>
-               <td>lastName</td>
-               <td>
-                  <input type="text" name="lastName" id="lastName" class="form-control">
-               </td>
-            </tr>
-            <tr>
-               <td>email</td>
-               <td>
-                  <input type="text" name="email" id="email" class="form-control">
-               </td>
-            </tr>
-            <tr>
-               <td>addressId</td>
-               <td>
-                  <select name="addressId" id ="addressId" class="form-control">
-                  	<c:forEach var="a" begin="1" end="605" step="1">
+                  <select name="staffId" id ="staffId" class="form-control">
+                  	<c:forEach var="a" begin="1" end="2" step="1">
                   		<option value="${a}">${a}</option>
                   	</c:forEach>
-                  </select>
-               </td>
-            </tr>
-            <tr>
-               <td>active</td>
-               <td>
-                  <select name="active" id ="active" class="form-control">
-                     <option value="1">1</option>
-                     <option value="0">0</option>
                   </select>
                </td>
             </tr>
