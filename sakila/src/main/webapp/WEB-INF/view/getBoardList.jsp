@@ -31,7 +31,7 @@
         <thead>
             <tr>
                 <th>boardId</th>
-                <th>boardTitler</th>
+                <th>boardTitle</th>
                 <th>boardDate</th>
             </tr>
         </thead>

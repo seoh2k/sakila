@@ -71,7 +71,7 @@ $(document).ready(function(){
 			<tr>
 				<td>store: </td>
 				<td>
-					<select name="storeId" id="storeId">
+					<select name="storeId" id="storeId" class="form-control">
 						<option value='' selected>-- 선택 --</option>
 						<option value='1'>1호점</option>
 						<option value='2'>2호점</option>
@@ -80,14 +80,16 @@ $(document).ready(function(){
 			</tr>
 			<tr>
 				<td>film: </td>
-				<td><select name="filmId" id="filmId"></select></td>
+				<td><select name="filmId" id="filmId" class="form-control"></select></td>
 			</tr>
 			<tr>
 				<td>inventory: </td>
-				<td><select name="inventoryId" id="inventoryId"></select></td>
+				<td>
+					<select name="inventoryId" id="inventoryId" class="form-control"></select>
+				</td>
 			</tr>
 		</table>
-		<button type="button" id="btn">삭제</button>
+		<button type="button" id="btn" class="btn btn-secondary">삭제</button>
 	</form>
 </div>
 </body>

@@ -19,6 +19,17 @@ $(document).ready(function(){
 </head>
 <body>
 	<h1>파일추가</h1>
+	
+	<div>
+    	<a href="${pageContext.request.contextPath}/admin/getBoardList">BoardList</a>
+        <a href="${pageContext.request.contextPath}/admin/getStaffList">StaffList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getFilmList">FilmList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getActorList">ActorList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a>
+    	<a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a>
+    </div>
+    
 	<!-- method: 파일 추가 시 post를 사용한다. -->
 	<!-- enctype: 파일 업로드를 위한 속성, 웹 서버로 데이터를 넘길 때 파일의 경로명과 파일 내용 모두를 전송하기 위해 사용한다. -->
 	<!-- multipart/form-data: 파일이나 이미지를 서버로 전송할 때 사용한다. -->

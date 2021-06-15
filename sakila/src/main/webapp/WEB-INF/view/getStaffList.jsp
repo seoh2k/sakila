@@ -80,10 +80,6 @@
 	    </form>
     </div>
 
-    <div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addStaff">직원 등록하기</a>
-    </div>
-
 </div>
 </body>
 </html>
