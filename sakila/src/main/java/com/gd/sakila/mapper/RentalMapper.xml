@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gd.sakila.mapper.RentalMapper">
+	<!-- 대여리스트 -->
+	<select id="selectRentalList" parameterType="map" resultType="map">
+		SELECT 
+			r.rental_id rentalId,
+			r.rental_date rentalDate,
+			r.inventory_id inventoryId,
+			f.title title,
+			r.return_date returnDate,
+			r.staff_id staffId
+		FROM rental r 
+			INNER JOIN inventory i ON r.inventory_id = i.inventory_id
+			INNER JOIN film f ON i.film_id = f.film_id
+		<where>
+			<if test="customerId != null">
+				r.customer_id=#{customerId}
+			</if>
+			<if test="searchWord != null">
+				f.title LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+		ORDER BY r.rental_date DESC
+		LIMIT #{beginRow}, #{rowPerPage}
+	</select>
+	
+	<!-- 페이징 -->
+	<select id="selectRentalTotal" parameterType="String" resultType="Integer">
+		SELECT 
+			COUNT(*) 
+		FROM rental r 
+			INNER JOIN inventory i ON r.inventory_id = i.inventory_id
+			INNER JOIN film f ON i.film_id = f.film_id
+		<where>
+			<if test="searchWord != null">
+				f.title LIKE CONCAT('%', #{searchWord}, '%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 영화 대여 -->
+	<!-- 1. 대여 -->
+	<insert id="insertRental" parameterType="map"> 
+		INSERT INTO rental(
+			rental_date,
+			inventory_id,
+			customer_id,
+			staff_id
+		) VALUES(
+			NOW(),
+			#{inventoryId},
+			#{customerId},
+			#{staffId}
+		)
+		<selectKey keyProperty ="rentalId" resultType="Integer" order="AFTER">
+				SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	<!-- 2. 대여비 추가 -->
+	<insert id="insertPayment" parameterType="map">
+		INSERT INTO payment(
+			customer_id,
+			staff_id,
+			rental_id,
+			amount,
+			payment_date
+		) VALUES (
+			#{customerId},
+			#{staffId},
+			#{rentalId},
+			#{amount},
+			NOW()
+		)
+	</insert>
+</mapper>

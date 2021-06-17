@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.CustomerService;
+import com.gd.sakila.service.RentalService;
 import com.gd.sakila.vo.Customer;
 import com.gd.sakila.vo.CustomerList;
 
@@ -25,38 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class CustomerController {
 	@Autowired CustomerService customerService;
-	
-	// 영화 대여
-	@GetMapping("/addRental")
-	public String addRental(Model model,
-			@RequestParam(value="customerId", required = true) Integer customerId) {
-		
-		log.debug("▶▶▶▶▶ addRental() customerId: " + customerId);
-		
-		model.addAttribute("customerId",customerId);
-		
-		return "addRental";
-	}
-	
-	@PostMapping("/addRental")
-	public String addRental(
-			@RequestParam(value="inventoryId", required = true) Integer inventoryId,
-			@RequestParam(value="customerId", required = true) Integer customerId,
-			@RequestParam(value="staffId", required = true) Integer staffId) {
-		log.debug("▶▶▶▶▶ addRental() inventoryId: "+inventoryId);
-		log.debug("▶▶▶▶▶ addRental() customerId: "+customerId);
-		log.debug("▶▶▶▶▶ addRental() staffId: "+staffId);
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("inventoryId", inventoryId);
-		map.put("customerId", customerId);
-		map.put("staffId", staffId);
-		
-		int row = customerService.addRental(map);
-		log.debug("▶▶▶▶▶ addRental() row: "+row);
-		
-		return "redirect:/admin/getCustomerList";
-	}
+	@Autowired RentalService rentalService;
 	
 	@GetMapping("/addCustomer")
 	public String addCustomer() {
@@ -72,14 +42,43 @@ public class CustomerController {
 	
 	@GetMapping("/getCustomerOne")
 	public String getCustomerOne(Model model, 
-			@RequestParam(value="ID", required = true) Integer ID) {
+			@RequestParam(value="ID", required = true) Integer ID,
+			@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
+			@RequestParam(value="rowPerPage", defaultValue = "10") int rowPerPage,
+			@RequestParam(value="searchWord", required = false) String searchWord) {
 		log.debug("▶▶▶▶▶ getCustomerOne() ID: "+ID);
+		log.debug("▶▶▶▶▶ getCustomerOne() currentPage: "+currentPage);
+		log.debug("▶▶▶▶▶ getCustomerOne() rowPerPage: "+rowPerPage);
+		log.debug("▶▶▶▶▶ getCustomerOne() searchWord: "+searchWord);
 		
-		Map<String, Object> map = customerService.getCustomerOne(ID);
-		log.debug("▶▶▶▶▶ getCustomerOne() map: "+map);
+		int rentalTotal = rentalService.getRentalTotal(searchWord);
+		int lastPage = (int)(Math.ceil((double)rentalTotal / rowPerPage));
+		int beginRow = (currentPage-1) * rowPerPage;
 		
-		model.addAttribute("map", map);
+		log.debug("▶▶▶▶▶ getCustomerOne() rentalTotal: "+rentalTotal);
+		log.debug("▶▶▶▶▶ getCustomerOne() lastPage: "+lastPage);
+		log.debug("▶▶▶▶▶ getCustomerOne() beginRow: "+beginRow);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("beginRow", beginRow);
+		map.put("rowPerPage", rowPerPage);
+		map.put("searchWord", searchWord);
+		
+		// 고객 상세보기
+		Map<String, Object> customerOne = customerService.getCustomerOne(ID);
+		log.debug("▶▶▶▶▶ getCustomerOne() customerOne: "+customerOne);
+		// 대여리스트
+		List<Map<String, Object>> rentalList = rentalService.getRentalList(map);
+		log.debug("▶▶▶▶▶ getCustomerOne() rentalList: "+rentalList);
+		
+		model.addAttribute("customerOne", customerOne);
 		model.addAttribute("ID", ID);
+		model.addAttribute("rentalList", rentalList);
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("rowPerPage", rowPerPage);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("lastPage", lastPage);
+		model.addAttribute("beginRow", beginRow);
 		
 		return "getCustomerOne";
 	}
