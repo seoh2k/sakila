@@ -27,10 +27,10 @@ public class RentalService {
 	}
 	
 	// 페이징
-	public int getRentalTotal(String searchWord) {
-		log.debug("▶▶▶▶▶ getRentalTotal() searchWord: "+searchWord);
+	public int getRentalTotal(Map<String, Object> map) {
+		log.debug("▶▶▶▶▶ getRentalTotal() map: "+map);
 		
-		return rentalMapper.selectRentalTotal(searchWord);
+		return rentalMapper.selectRentalTotal(map);
 	}
 	
 	/* 대여

@@ -12,6 +12,16 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	console.log('document ready')
+	$('#btn').click(function(){
+		console.log('btn click!');
+		$('#searchWordForm').submit();
+	});
+});
+</script>
 </head>
 <body>
 <div class="container">
@@ -25,6 +35,10 @@
     	<a href="${pageContext.request.contextPath}/admin/getCustomerList">CustomerList</a>
     	<a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a>
     	<a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a>
+    </div>
+    
+    <div>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addRental?customerId=${customerOne.ID}">영화 대여</a>
     </div>
     
 		<table class="table">
@@ -69,12 +83,22 @@
 		</table>
 		
 	<h3>rentalList</h3>
+		<!-- 검색어 입력창 -->
+	    <div>
+		    <form id="searchWordForm" action="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${customerOne.ID}" method="get">
+		        검색어(제목) :
+		        <input id="searchWord" name="searchWord" type="text">
+		        <button id="btn" type="button">검색</button>
+		    </form>
+		</div>
+		
 		<table class="table table-striped">
 			<thead>
 				<tr>
 					<td>rentalId</td>
 					<td>rentalDate</td>
 					<td>inventoryId</td>
+					<td>customerId</td>
 					<td>title</td>
 					<td>returnDate</td>
 					<td>staffId</td>
@@ -86,6 +110,7 @@
 	                	<td>${r.rentalId}</td>
 	                	<td>${r.rentalDate}</td>
 	                	<td>${r.inventoryId}</td>
+	                	<td>${r.customerId}</td>
 	                	<td>${r.title}</td>
 	                	<td>${r.returnDate}</td>
 	                	<td>${r.staffId}</td>
@@ -93,28 +118,15 @@
 	            </c:forEach>
 			</tbody>
 		</table>
-		
-		<!-- 검색어 입력창 -->
-	    <div class="text-center">
-		    <form action="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${ID}" method="get">
-		        <label for="searchWord">검색어(제목) :</label> 
-		        <input name="searchWord" type="text">
-		        <button type="submit">검색</button>
-		    </form>
-		</div>
 	    
 	    <ul class="pager">
 	        <c:if test="${currentPage > 1}">
-	            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${ID}&currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a></li>
+	            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${customerOne.ID}&currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a></li>
 	        </c:if>
 	        <c:if test="${currentPage < lastPage}">
-	            <li class="next"><a href="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${ID}&currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>
+	            <li class="next"><a href="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${customerOne.ID}&currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>
 	        </c:if>
 	    </ul>
-		
-	<div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addRental?customerId=${map.ID}">영화 대여</a>
-    </div>
 </div>   
 </body>
 </html>

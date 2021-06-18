@@ -7,6 +7,7 @@
 			r.rental_id rentalId,
 			r.rental_date rentalDate,
 			r.inventory_id inventoryId,
+			r.customer_id customerId,
 			f.title title,
 			r.return_date returnDate,
 			r.staff_id staffId
@@ -26,13 +27,16 @@
 	</select>
 	
 	<!-- 페이징 -->
-	<select id="selectRentalTotal" parameterType="String" resultType="Integer">
+	<select id="selectRentalTotal" parameterType="map" resultType="Integer">
 		SELECT 
 			COUNT(*) 
 		FROM rental r 
 			INNER JOIN inventory i ON r.inventory_id = i.inventory_id
 			INNER JOIN film f ON i.film_id = f.film_id
 		<where>
+			<if test="customerId != null">
+				r.customer_id=#{customerId}
+			</if>
 			<if test="searchWord != null">
 				f.title LIKE CONCAT('%', #{searchWord}, '%')
 			</if>

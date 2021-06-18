@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface RentalMapper {
 	// 대여 리스트
 	List<Map<String, Object>> selectRentalList(Map<String, Object> map);
-	int selectRentalTotal(String searchWord);
+	int selectRentalTotal(Map<String, Object> map);
 		
 	// 영화 대여
 	int insertRental(Map<String, Object> map);

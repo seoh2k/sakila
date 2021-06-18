@@ -51,7 +51,11 @@ public class CustomerController {
 		log.debug("▶▶▶▶▶ getCustomerOne() rowPerPage: "+rowPerPage);
 		log.debug("▶▶▶▶▶ getCustomerOne() searchWord: "+searchWord);
 		
-		int rentalTotal = rentalService.getRentalTotal(searchWord);
+		Map<String, Object> map = new HashMap<>();
+		map.put("ID", ID);
+		map.put("searchWord", searchWord);
+		
+		int rentalTotal = rentalService.getRentalTotal(map);
 		int lastPage = (int)(Math.ceil((double)rentalTotal / rowPerPage));
 		int beginRow = (currentPage-1) * rowPerPage;
 		
@@ -59,7 +63,6 @@ public class CustomerController {
 		log.debug("▶▶▶▶▶ getCustomerOne() lastPage: "+lastPage);
 		log.debug("▶▶▶▶▶ getCustomerOne() beginRow: "+beginRow);
 		
-		Map<String, Object> map = new HashMap<>();
 		map.put("beginRow", beginRow);
 		map.put("rowPerPage", rowPerPage);
 		map.put("searchWord", searchWord);
