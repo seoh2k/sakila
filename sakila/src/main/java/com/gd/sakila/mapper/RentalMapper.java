@@ -13,4 +13,7 @@ public interface RentalMapper {
 	// 영화 대여
 	int insertRental(Map<String, Object> map);
 	int insertPayment(Map<String, Object> map);
+	
+	// 영화 반납
+	int selectRentalByCustomer(int customerId);
 }

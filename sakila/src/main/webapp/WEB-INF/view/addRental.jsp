@@ -17,16 +17,16 @@
 <script>
 $(document).ready(function(){
 	$.ajax({
-      type:'get',
-      url:'/getFilmTitleList',
-      success: function(jsonData) {
-         $(jsonData).each(function(index, item) {
-            $('#filmId').append(
-               '<option value="'+item.film_id+'">'+item.title+'</option>'
-            );
-         });
-      }
-   });
+		type:'get',
+		url:'/getFilmTitleList',
+		success: function(jsonData) {
+			$(jsonData).each(function(index, item) {
+				$('#filmId').append(
+					'<option value="'+item.film_id+'">'+item.title+'</option>'
+				);
+			});
+		}
+	});
 	
 	$('#filmId').change(function(){
 		console.log('inventoryId 목록');
@@ -99,7 +99,7 @@ $(document).ready(function(){
             </tr>
          </table>
          
-         <button id="btn" class="btn btn-secondary">등록</button>
+         <button id="btn" class="btn btn-secondary">대여</button>
       </form>
 </div>
 </body>

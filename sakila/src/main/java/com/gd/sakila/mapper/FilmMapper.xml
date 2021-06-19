@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gd.sakila.mapper.FilmMapper"> 
+	<!-- 영화 대여 -->
 	<select id="selectRentalRate" parameterType="Integer" resultType="double">
 		SELECT 
 			rental_rate
 		FROM film f, inventory i
 		WHERE f.film_id = i.film_id AND i.inventory_id = #{inventoryId}
 	</select>
-
+	<!-- 영화 제목 선택 -->
 	<select id="selectFilmTitleList" resultType="map">
 		SELECT 
 			film_id,

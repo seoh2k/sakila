@@ -38,8 +38,8 @@ $(document).ready(function(){
     </div>
     
     <div>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addRental?customerId=${customerOne.ID}">영화 대여</a>
-        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/deleteRental?customerId=${customerOne.ID}">영화 반납</a>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addRental?customerId=${ID}">영화 대여</a>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/removeRental?customerId=${ID}">영화 반납</a>
     </div>
     
 		<table class="table">
@@ -113,7 +113,7 @@ $(document).ready(function(){
 	                	<td>${r.rentalDate}</td>
 	                	<td>${r.inventoryId}</td>
 	                	<td>${r.customerId}</td>
-	                	<td>${r.title}</td>
+	                	<td><a href="${pageContext.request.contextPath}/admin/getFilmOne?FID=${r.filmId}">${r.title}</a></td>
 	                	<td>${r.returnDate}</td>
 	                	<td>${r.staffId}</td>
 	                </tr>

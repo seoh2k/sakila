@@ -10,7 +10,8 @@
 			r.customer_id customerId,
 			f.title title,
 			r.return_date returnDate,
-			r.staff_id staffId
+			r.staff_id staffId,
+			f.film_id filmId
 		FROM rental r 
 			INNER JOIN inventory i ON r.inventory_id = i.inventory_id
 			INNER JOIN film f ON i.film_id = f.film_id
@@ -77,4 +78,12 @@
 			NOW()
 		)
 	</insert>
+	
+	<select id="selectRentalByCustomer" parameterType="Integer" resultType="Integer">
+		SELECT 
+			rental_id
+		FROM rental
+		WHERE return_date IS NULL 
+			AND customer_id = #{customerId}
+	</select>
 </mapper>

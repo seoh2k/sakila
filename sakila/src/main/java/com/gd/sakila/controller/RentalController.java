@@ -49,6 +49,28 @@ public class RentalController {
 		
 		rentalService.addRental(map);
 		
-		return "redirect:/admin/getCustomerList";
+		return "redirect:/admin/getCustomerOne?ID=" +customerId;
+	}
+	
+	// 영화 반납
+	@GetMapping("/removeRental")
+	public String removeRental(Model model,
+			@RequestParam(value="customerId", required = true) Integer customerId) {
+		log.debug("▶▶▶▶▶ removeRental() customerId: " + customerId);
+		
+		model.addAttribute("customerId",customerId);
+		return "removeRental";
+	}
+	
+	@PostMapping("/removeRental")
+	public String removeRental(Model model,
+			@RequestParam(value="rentalId", required = true) Integer rentalId,
+			@RequestParam(value="customerId", required = true) Integer customerId) {
+		log.debug("▶▶▶▶▶ addRental() rentalId: "+rentalId);
+		log.debug("▶▶▶▶▶ addRental() customerId: "+customerId);
+		
+		rentalService.removeRental(customerId);
+		
+		return "redirect:/admin/getCustomerOne?ID=" +customerId;
 	}
 }
