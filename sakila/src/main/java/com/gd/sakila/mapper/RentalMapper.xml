@@ -16,10 +16,10 @@
 			INNER JOIN film f ON i.film_id = f.film_id
 		<where>
 			<if test="customerId != null">
-				r.customer_id=#{customerId}
+				r.customer_id = #{customerId}
 			</if>
 			<if test="searchWord != null">
-				f.title LIKE CONCAT('%', #{searchWord}, '%')
+				AND f.title LIKE CONCAT('%', #{searchWord}, '%')
 			</if>
 		</where>
 		ORDER BY r.rental_date DESC
@@ -35,7 +35,7 @@
 			INNER JOIN film f ON i.film_id = f.film_id
 		<where>
 			<if test="customerId != null">
-				r.customer_id=#{customerId}
+				r.customer_id = #{customerId}
 			</if>
 			<if test="searchWord != null">
 				f.title LIKE CONCAT('%', #{searchWord}, '%')

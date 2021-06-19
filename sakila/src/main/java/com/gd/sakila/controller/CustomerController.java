@@ -46,6 +46,11 @@ public class CustomerController {
 			@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
 			@RequestParam(value="rowPerPage", defaultValue = "10") int rowPerPage,
 			@RequestParam(value="searchWord", required = false) String searchWord) {
+		
+		if(searchWord != null && searchWord.equals("")) {
+			searchWord = null;
+		}
+		
 		log.debug("▶▶▶▶▶ getCustomerOne() ID: "+ID);
 		log.debug("▶▶▶▶▶ getCustomerOne() currentPage: "+currentPage);
 		log.debug("▶▶▶▶▶ getCustomerOne() rowPerPage: "+rowPerPage);
@@ -66,6 +71,7 @@ public class CustomerController {
 		map.put("beginRow", beginRow);
 		map.put("rowPerPage", rowPerPage);
 		map.put("searchWord", searchWord);
+		map.put("customerId", ID);
 		
 		// 고객 상세보기
 		Map<String, Object> customerOne = customerService.getCustomerOne(ID);

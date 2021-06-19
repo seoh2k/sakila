@@ -39,6 +39,7 @@ $(document).ready(function(){
     
     <div>
         <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/addRental?customerId=${customerOne.ID}">영화 대여</a>
+        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/deleteRental?customerId=${customerOne.ID}">영화 반납</a>
     </div>
     
 		<table class="table">
@@ -85,7 +86,8 @@ $(document).ready(function(){
 	<h3>rentalList</h3>
 		<!-- 검색어 입력창 -->
 	    <div>
-		    <form id="searchWordForm" action="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${customerOne.ID}" method="get">
+		    <form id="searchWordForm" action="${pageContext.request.contextPath}/admin/getCustomerOne" method="get">
+		        <input name="ID" type="hidden" value="${ID}">
 		        검색어(제목) :
 		        <input id="searchWord" name="searchWord" type="text">
 		        <button id="btn" type="button">검색</button>
@@ -121,10 +123,10 @@ $(document).ready(function(){
 	    
 	    <ul class="pager">
 	        <c:if test="${currentPage > 1}">
-	            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${customerOne.ID}&currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a></li>
+	            <li class="previous"><a href="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${ID}&currentPage=${currentPage-1}&searchWord=${searchWord}">이전</a></li>
 	        </c:if>
 	        <c:if test="${currentPage < lastPage}">
-	            <li class="next"><a href="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${customerOne.ID}&currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>
+	            <li class="next"><a href="${pageContext.request.contextPath}/admin/getCustomerOne?ID=${ID}&currentPage=${currentPage+1}&searchWord=${searchWord}">다음</a></li>
 	        </c:if>
 	    </ul>
 </div>   
