@@ -58,9 +58,7 @@ public class RentalService {
 	}
 	
 	// 영화 반납
-	public void removeRental(int customerId) {
-		log.debug("▶▶▶▶▶ removeRental() customerId: "+customerId);
-		
-		rentalMapper.selectRentalByCustomer(customerId);
+	public void removeRental(int customerId) {                           
+		log.debug("▶▶▶▶▶ removeRental() customerId: "+customerId);                                          
 	}
 }

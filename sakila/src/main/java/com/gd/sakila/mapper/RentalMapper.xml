@@ -79,11 +79,20 @@
 		)
 	</insert>
 	
-	<select id="selectRentalByCustomer" parameterType="Integer" resultType="Integer">
+	<!-- 영화 반납 -->
+	<!-- 1. 뷰에서 고객 id에 해당하는 대여 id 보여주기 -->
+	<select id="selectRentalByCustomer" parameterType="Integer" resultType="map">
 		SELECT 
 			rental_id
 		FROM rental
 		WHERE return_date IS NULL 
 			AND customer_id = #{customerId}
 	</select>
+	
+	<!-- 2. 반납일 업데이트 -->
+	<update id="updateReturnDate" parameterType="Integer">
+		UPDATE rental
+		SET return_date = NOW()
+		WHERE rental_id = #{rentalId}
+	</update>
 </mapper>

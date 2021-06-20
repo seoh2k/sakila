@@ -16,12 +16,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-	$('#customerId').change(function(){
 		console.log('rentalId 목록');
 		$.ajax({
 			type:'get',
-			url:'/getRentalIdList',
-			data:{filmId : $('#customerId').val()},
+			url:'/getRentalByCustomer',
+			data:{customerId : $('#customerId').val()},
 			success: function(jsonData) {
 				$('#rentalId').empty();
 				$(jsonData).each(function(index, item) {
@@ -31,7 +30,6 @@ $(document).ready(function(){
 				});
 			}
 		});
-	});
 	
 	$('#btn').click(function(){
 		console.log('btn click!'); // 웹브라우저 콘솔에서 확인 가능
@@ -64,9 +62,9 @@ $(document).ready(function(){
                </td>
             </tr>
             <tr>
-               <td>filmTitle</td>
+               <td>rentalId</td>
                <td>
-                  <select name="title" id ="rentalId" class="form-control"></select>
+                  <select name="rentalId" id ="rentalId" class="form-control"></select>
                </td>
             </tr>
          </table>
