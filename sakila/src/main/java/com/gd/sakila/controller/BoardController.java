@@ -14,7 +14,6 @@ import com.gd.sakila.service.BoardService;
 import com.gd.sakila.vo.Board;
 import com.gd.sakila.vo.BoardForm;
 
-import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

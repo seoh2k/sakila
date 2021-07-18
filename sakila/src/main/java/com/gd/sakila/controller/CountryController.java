@@ -1,6 +1,5 @@
 package com.gd.sakila.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.gd.sakila.service.CountryService;
-import com.gd.sakila.vo.Country;
 
 @Controller // 컴포넌트다. 객체가 자동으로 만들어진다. 서블릿처럼 행동할 수 있는 클래스를 자동으로 상속받는다
 public class CountryController {
