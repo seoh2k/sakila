@@ -3,6 +3,8 @@ package com.gd.sakila.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/admin")
 public class StaffController {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired StaffService staffService;
 
 	@GetMapping("/getStaffList")
@@ -27,13 +31,13 @@ public class StaffController {
 			@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage,
 			@RequestParam(value="searchWord", required = false)String searchWord) {
 
-		log.debug("currentPage: "+ currentPage);
-		log.debug("rowPerPage: "+ rowPerPage);
-		log.debug("searchWord: "+ searchWord);
+		logger.debug("currentPage: "+ currentPage);
+		logger.debug("rowPerPage: "+ rowPerPage);
+		logger.debug("searchWord: "+ searchWord);
 
 		List<StaffListView> StaffList = staffService.getStaffList(currentPage, rowPerPage, searchWord);
 
-		log.debug("▶▶▶▶▶▶▶ StaffList Size : "+StaffList.size());
+		logger.debug("▶▶▶▶▶▶▶ StaffList Size : "+StaffList.size());
 
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("currentPage", currentPage);

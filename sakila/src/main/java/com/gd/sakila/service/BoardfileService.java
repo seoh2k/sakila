@@ -3,11 +3,14 @@ package com.gd.sakila.service;
 import java.io.File;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gd.sakila.controller.HomeController;
 import com.gd.sakila.mapper.BoardfileMapper;
 import com.gd.sakila.vo.Boardfile;
 
@@ -17,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional // 쪼개질 수 없는 하나의 단위작업, 한번에 이루어지는 작업의 단위
 public class BoardfileService {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired BoardfileMapper boardfileMapper; 
 	
 	// boardOne에서 파일 추가
@@ -56,19 +61,19 @@ public class BoardfileService {
 	
 	// 추가된 파일 삭제
 	public int removeBoardfileOne(Boardfile boardfile) {
-		log.debug("▶▶▶▶▶ removeBoardfileOne boardfile: " + boardfile);
+		logger.debug("▶▶▶▶▶ removeBoardfileOne boardfile: " + boardfile);
 		
 		// 1) 물리적 파일 삭제
 		File temp = new File("");
 		String path = temp.getAbsolutePath(); // 현재 프로젝트의 폴더위치 구하기 위해서
 		File file = new File(path + "\\src\\main\\webapp\\resource" + boardfile.getBoardfileName());
 		if(file.exists()){
-			log.debug("▶▶▶▶▶ removeBoardfileOne if문...");
+			logger.debug("▶▶▶▶▶ removeBoardfileOne if문...");
 			file.delete();
 		}
 		// 2) db 삭제
 		int row = boardfileMapper.deleteBoardfileOne(boardfile.getBoardfileId());
-		log.debug("▶▶▶▶▶ 삭제성공(1), 삭제실패(0): " + row);
+		logger.debug("▶▶▶▶▶ 삭제성공(1), 삭제실패(0): " + row);
 		
 		return row;
 	}

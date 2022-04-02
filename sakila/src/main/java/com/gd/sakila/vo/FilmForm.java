@@ -20,4 +20,32 @@ public class FilmForm { // 폼의 정보들을 vo 타입으로 만들어줌 -> �
          this.film.setSpecialFeatures(sb.toString().substring(0, sb.toString().length()-1));
       }
    }
+
+	public Category getCategory() {
+		return category;
+	}
+	
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
+	public Film getFilm() {
+		return film;
+	}
+	
+	public void setFilm(Film film) {
+		this.film = film;
+	}
+	
+	public String getLastUpdate() {
+		return lastUpdate;
+	}
+	
+	public void setLastUpdate(String lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+	
+	public List<String> getSpecialFeatures() {
+		return specialFeatures;
+	}
 }

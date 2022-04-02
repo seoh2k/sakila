@@ -3,10 +3,13 @@ package com.gd.sakila.service;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gd.sakila.controller.HomeController;
 import com.gd.sakila.mapper.FilmMapper;
 import com.gd.sakila.mapper.RentalMapper;
 
@@ -16,19 +19,21 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional
 public class RentalService {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired RentalMapper rentalMapper;
 	@Autowired FilmMapper filmMapper;
 	
 	// 대여 리스트
 	public List<Map<String, Object>> getRentalList(Map<String, Object> map){
-		log.debug("▶▶▶▶▶ getRentalList() map: "+map);
+		logger.debug("▶▶▶▶▶ getRentalList() map: "+map);
 		
 		return rentalMapper.selectRentalList(map);
 	}
 	
 	// 페이징
 	public int getRentalTotal(Map<String, Object> map) {
-		log.debug("▶▶▶▶▶ getRentalTotal() map: "+map);
+		logger.debug("▶▶▶▶▶ getRentalTotal() map: "+map);
 		
 		return rentalMapper.selectRentalTotal(map);
 	}
@@ -41,16 +46,16 @@ public class RentalService {
 	
 	// 영화 대여
 	public void addRental(Map<String, Object> map) {
-		log.debug("▶▶▶▶▶ addRental() map: "+map);
+		logger.debug("▶▶▶▶▶ addRental() map: "+map);
 		
 		// 1. 
 		rentalMapper.insertRental(map);
 		
 		// 2.
 		int inventoryId = (Integer)map.get("inventoryId");
-		log.debug("▶▶▶▶▶ addRental() inventoryId: "+inventoryId);
+		logger.debug("▶▶▶▶▶ addRental() inventoryId: "+inventoryId);
 		double amount = filmMapper.selectRentalRate(inventoryId);
-		log.debug("▶▶▶▶▶ addRental() amount: "+amount);
+		logger.debug("▶▶▶▶▶ addRental() amount: "+amount);
 		map.put("amount", amount);
 		
 		// 3.
@@ -59,6 +64,6 @@ public class RentalService {
 	
 	// 영화 반납
 	public void removeRental(int customerId) {                           
-		log.debug("▶▶▶▶▶ removeRental() customerId: "+customerId);                                          
+		logger.debug("▶▶▶▶▶ removeRental() customerId: "+customerId);                                          
 	}
 }

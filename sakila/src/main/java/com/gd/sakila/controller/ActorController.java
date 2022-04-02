@@ -2,6 +2,8 @@ package com.gd.sakila.controller;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +21,15 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/admin")
 public class ActorController {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired ActorService actorService;
 	
 	@PostMapping("/modifyFilmActor")
 	public String modifyFilmActor(@RequestParam(value="filmId", required= true) int filmId,
 									@RequestParam(value="ck", required= true) int[] ck) {
-		log.debug("▶▶▶▶▶ modifyFilmActor ck: "+ck);
-		log.debug("▶▶▶▶▶ modifyFilmActor filmId: "+filmId);
+		logger.debug("▶▶▶▶▶ modifyFilmActor ck: "+ck);
+		logger.debug("▶▶▶▶▶ modifyFilmActor filmId: "+filmId);
 		
 		actorService.modifyFilmActor(filmId, ck);
 		return "redirect:/admin/getFilmOne?filmId="+filmId;
@@ -38,7 +42,7 @@ public class ActorController {
 	
 	@PostMapping("/addActor")
 	public String addActor(Actor actor) {
-		log.debug("addActor actor: "+actor);
+		logger.debug("addActor actor: "+actor);
 		actorService.addActor(actor);
 		return "redirect:/admin/getActorList";
 	}
@@ -48,9 +52,9 @@ public class ActorController {
 								@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
 								@RequestParam(value="rowPerPage", defaultValue = "10") int rowPerPage,
 								@RequestParam(value="searchWord", required = false) String searchWord) {
-		log.debug("▶▶▶▶▶ getActorList currentPage: "+currentPage);
-		log.debug("▶▶▶▶▶ getActorList rowPerPage: "+rowPerPage);
-		log.debug("▶▶▶▶▶ getActorList searchWord: "+searchWord);
+		logger.debug("▶▶▶▶▶ getActorList currentPage: "+currentPage);
+		logger.debug("▶▶▶▶▶ getActorList rowPerPage: "+rowPerPage);
+		logger.debug("▶▶▶▶▶ getActorList searchWord: "+searchWord);
 		
 		Map<String, Object> map = actorService.getActorList(currentPage, rowPerPage, searchWord);
 		model.addAttribute("currentPage", currentPage);

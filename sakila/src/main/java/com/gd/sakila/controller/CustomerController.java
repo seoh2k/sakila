@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/admin")
 public class CustomerController {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired CustomerService customerService;
 	@Autowired RentalService rentalService;
 	
@@ -35,7 +39,7 @@ public class CustomerController {
 	
 	@PostMapping("/addCustomer")
 	public String addCustomer(Customer customer) {
-		log.debug("▶▶▶▶▶ addCustomer() customer: "+customer);
+		logger.debug("▶▶▶▶▶ addCustomer() customer: "+customer);
 		customerService.addCustomer(customer);
 		return "redirect:/admin/getCustomerList";
 	}
@@ -51,10 +55,10 @@ public class CustomerController {
 			searchWord = null;
 		}
 		
-		log.debug("▶▶▶▶▶ getCustomerOne() ID: "+ID);
-		log.debug("▶▶▶▶▶ getCustomerOne() currentPage: "+currentPage);
-		log.debug("▶▶▶▶▶ getCustomerOne() rowPerPage: "+rowPerPage);
-		log.debug("▶▶▶▶▶ getCustomerOne() searchWord: "+searchWord);
+		logger.debug("▶▶▶▶▶ getCustomerOne() ID: "+ID);
+		logger.debug("▶▶▶▶▶ getCustomerOne() currentPage: "+currentPage);
+		logger.debug("▶▶▶▶▶ getCustomerOne() rowPerPage: "+rowPerPage);
+		logger.debug("▶▶▶▶▶ getCustomerOne() searchWord: "+searchWord);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("ID", ID);
@@ -64,9 +68,9 @@ public class CustomerController {
 		int lastPage = (int)(Math.ceil((double)rentalTotal / rowPerPage));
 		int beginRow = (currentPage-1) * rowPerPage;
 		
-		log.debug("▶▶▶▶▶ getCustomerOne() rentalTotal: "+rentalTotal);
-		log.debug("▶▶▶▶▶ getCustomerOne() lastPage: "+lastPage);
-		log.debug("▶▶▶▶▶ getCustomerOne() beginRow: "+beginRow);
+		logger.debug("▶▶▶▶▶ getCustomerOne() rentalTotal: "+rentalTotal);
+		logger.debug("▶▶▶▶▶ getCustomerOne() lastPage: "+lastPage);
+		logger.debug("▶▶▶▶▶ getCustomerOne() beginRow: "+beginRow);
 		
 		map.put("beginRow", beginRow);
 		map.put("rowPerPage", rowPerPage);
@@ -75,10 +79,10 @@ public class CustomerController {
 		
 		// 고객 상세보기
 		Map<String, Object> customerOne = customerService.getCustomerOne(ID);
-		log.debug("▶▶▶▶▶ getCustomerOne() customerOne: "+customerOne);
+		logger.debug("▶▶▶▶▶ getCustomerOne() customerOne: "+customerOne);
 		// 대여리스트
 		List<Map<String, Object>> rentalList = rentalService.getRentalList(map);
-		log.debug("▶▶▶▶▶ getCustomerOne() rentalList: "+rentalList);
+		logger.debug("▶▶▶▶▶ getCustomerOne() rentalList: "+rentalList);
 		
 		model.addAttribute("customerOne", customerOne);
 		model.addAttribute("ID", ID);
@@ -101,9 +105,9 @@ public class CustomerController {
 		int lastPage = (int)(Math.ceil((double)customerTotal / rowPerPage));
 		int beginRow = (currentPage-1) * rowPerPage;
 		
-		log.debug("▶▶▶▶▶ getCustomerList() customerTotal: "+customerTotal);
-		log.debug("▶▶▶▶▶ getCustomerList() lastPage: "+lastPage);
-		log.debug("▶▶▶▶▶ getCustomerList() beginRow: "+beginRow);
+		logger.debug("▶▶▶▶▶ getCustomerList() customerTotal: "+customerTotal);
+		logger.debug("▶▶▶▶▶ getCustomerList() lastPage: "+lastPage);
+		logger.debug("▶▶▶▶▶ getCustomerList() beginRow: "+beginRow);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("beginRow", beginRow);

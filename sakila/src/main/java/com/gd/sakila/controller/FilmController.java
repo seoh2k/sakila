@@ -3,6 +3,8 @@ package com.gd.sakila.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/admin")
 public class FilmController {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired
 	FilmService filmService;
 	@Autowired
@@ -30,7 +34,7 @@ public class FilmController {
 
 	@GetMapping("/addFilm")
 	public String addFilm(Model model) {
-		log.debug("▶▶▶▶▶ addFilm model: " + model); 
+		logger.debug("▶▶▶▶▶ addFilm model: " + model); 
 		// category list
 		List<Category> categoryList = filmService.getCategoryList(); // CAtegoryService에서 받자
 		List<Language> languageList = langaugeService.getLanguageList();
@@ -44,7 +48,7 @@ public class FilmController {
 	// 3.
 	@PostMapping("/addFilm") // 기본(값)타입 매개변수의 이름과 name이 같으면 매핑
 	public String addFilm(FilmForm filmForm) { // 참조타입은 필드명과 name이 같으면 매핑시킨다.
-		log.debug("▶▶▶▶▶ addFilm filmForm: " + filmForm); 
+		logger.debug("▶▶▶▶▶ addFilm filmForm: " + filmForm); 
 		int filmId = filmService.addFilm(filmForm);
 		return "redirect:/admin/getFilmOne?FID=" + filmId;
 	}
@@ -52,8 +56,8 @@ public class FilmController {
 	@GetMapping("modifyFilmActor")
 	public String modifyFilmActor(@RequestParam(value = "filmId", required = true) int filmId,
 			@RequestParam(value = "ck") int[] ck) {
-		log.debug("▶▶▶▶▶modifyFilmActor filmId: " + filmId);
-		log.debug("▶▶▶▶▶modifyFilmActor ck length: " + ck.length);
+		logger.debug("▶▶▶▶▶modifyFilmActor filmId: " + filmId);
+		logger.debug("▶▶▶▶▶modifyFilmActor ck length: " + ck.length);
 		// service - mapper
 		// delete from film_actor where film_id = #{filmId}
 		// for{ }
@@ -64,22 +68,22 @@ public class FilmController {
 	@GetMapping("/getFilmActorListByFilm")
 	public String getFilmActorListByFilm(Model model, @RequestParam(value = "filmId", required = true) int filmId) {
 		List<Map<String, Object>> list = filmService.getFilmActorListByFilm(filmId);
-		log.debug("list size() :" + list.size()); // 200
+		logger.debug("list size() :" + list.size()); // 200
 		model.addAttribute("filmActorList", list);
 		return "getFilmActorListByFilm";
 	}
 
 	@GetMapping("/getFilmOne")
 	public String getFilmOne(Model model, @RequestParam(value = "FID", required = true) int FID) {
-		log.debug("▶▶▶▶▶getFilmOne FID: " + FID);
+		logger.debug("▶▶▶▶▶getFilmOne FID: " + FID);
 
 		Map<String, Object> filmMap = filmService.getFilmOne(FID);
 		int firstStoreFilmCount = filmService.getFilmCount(FID, 1);
 		int secondStoreFilmCount = filmService.getFilmCount(FID, 2);
 
-		log.debug("▶▶▶▶▶getFilmOne map: " + filmMap);
-		log.debug("▶▶▶▶▶getFilmOne firstStoreFilmCount: " + firstStoreFilmCount);
-		log.debug("▶▶▶▶▶getFilmOne secondStoreFilmCount: " + secondStoreFilmCount);
+		logger.debug("▶▶▶▶▶getFilmOne map: " + filmMap);
+		logger.debug("▶▶▶▶▶getFilmOne firstStoreFilmCount: " + firstStoreFilmCount);
+		logger.debug("▶▶▶▶▶getFilmOne secondStoreFilmCount: " + secondStoreFilmCount);
 
 		model.addAttribute("filmMap", filmMap);
 		model.addAttribute("firstStoreFilmCount", firstStoreFilmCount);
@@ -96,12 +100,12 @@ public class FilmController {
 			@RequestParam(name = "currentPage", defaultValue = "1") int currentPage,
 			@RequestParam(name = "rowPerPage", defaultValue = "10") int rowPerPage,
 			@RequestParam(name = "actors", required = false) String actors) {
-		log.debug("▶▶▶▶▶ getFilmList categoryName: " + categoryName);
-		log.debug("▶▶▶▶▶ getFilmList price: " + price);
-		log.debug("▶▶▶▶▶ getFilmList title: " + title);
-		log.debug("▶▶▶▶▶ getFilmList rating: " + rating);
-		log.debug("▶▶▶▶▶ getFilmList currentPage: " + currentPage);
-		log.debug("▶▶▶▶▶ getFilmList actors: " + actors);
+		logger.debug("▶▶▶▶▶ getFilmList categoryName: " + categoryName);
+		logger.debug("▶▶▶▶▶ getFilmList price: " + price);
+		logger.debug("▶▶▶▶▶ getFilmList title: " + title);
+		logger.debug("▶▶▶▶▶ getFilmList rating: " + rating);
+		logger.debug("▶▶▶▶▶ getFilmList currentPage: " + currentPage);
+		logger.debug("▶▶▶▶▶ getFilmList actors: " + actors);
 
 		// 카테고리를 선택하지 않고 검색했을 때 버그 수정
 		if (categoryName != null && categoryName.equals("")) {

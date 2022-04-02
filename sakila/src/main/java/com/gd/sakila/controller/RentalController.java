@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,13 +22,15 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/admin")
 public class RentalController {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired RentalService rentalService;
 	
 	// 영화 대여
 	@GetMapping("/addRental")
 	public String addRental(Model model,
 			@RequestParam(value="customerId", required = true) Integer customerId) {
-		log.debug("▶▶▶▶▶ addRental() customerId: " + customerId);
+		logger.debug("▶▶▶▶▶ addRental() customerId: " + customerId);
 		
 		model.addAttribute("customerId",customerId);
 		
@@ -38,9 +42,9 @@ public class RentalController {
 			@RequestParam(value="inventoryId", required = true) Integer inventoryId,
 			@RequestParam(value="customerId", required = true) Integer customerId,
 			@RequestParam(value="staffId", required = true) Integer staffId) {
-		log.debug("▶▶▶▶▶ addRental() inventoryId: "+inventoryId);
-		log.debug("▶▶▶▶▶ addRental() customerId: "+customerId);
-		log.debug("▶▶▶▶▶ addRental() staffId: "+staffId);
+		logger.debug("▶▶▶▶▶ addRental() inventoryId: "+inventoryId);
+		logger.debug("▶▶▶▶▶ addRental() customerId: "+customerId);
+		logger.debug("▶▶▶▶▶ addRental() staffId: "+staffId);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("inventoryId", inventoryId);
@@ -56,7 +60,7 @@ public class RentalController {
 	@GetMapping("/removeRental")
 	public String removeRental(Model model,
 			@RequestParam(value="customerId", required = true) Integer customerId) {
-		log.debug("▶▶▶▶▶ removeRental() customerId: " + customerId);
+		logger.debug("▶▶▶▶▶ removeRental() customerId: " + customerId);
 		
 		model.addAttribute("customerId",customerId);
 		return "removeRental";
@@ -66,8 +70,8 @@ public class RentalController {
 	public String removeRental(Model model,
 			@RequestParam(value="rentalId", required = true) Integer rentalId,
 			@RequestParam(value="customerId", required = true) Integer customerId) {
-		log.debug("▶▶▶▶▶ addRental() rentalId: "+rentalId);
-		log.debug("▶▶▶▶▶ addRental() customerId: "+customerId);
+		logger.debug("▶▶▶▶▶ addRental() rentalId: "+rentalId);
+		logger.debug("▶▶▶▶▶ addRental() customerId: "+customerId);
 		
 		rentalService.removeRental(customerId);
 		

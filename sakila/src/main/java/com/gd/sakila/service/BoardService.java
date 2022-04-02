@@ -9,11 +9,14 @@ import java.util.UUID;
 
 import javax.management.RuntimeErrorException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gd.sakila.controller.HomeController;
 import com.gd.sakila.mapper.BoardMapper;
 import com.gd.sakila.mapper.BoardfileMapper;
 import com.gd.sakila.mapper.CommentMapper;
@@ -29,19 +32,21 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional // 예외가 발생하면 실행 단위가 지속된다.
 public class BoardService {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired BoardMapper boardMapper; /// 스캔 객체를 가지고 있으면 대입ㅇ르 해주겠다
 	@Autowired BoardfileMapper boardfileMapper;
 	@Autowired CommentMapper commentMapper;
 	
 	// 수정 액션
 	public int modifyBoard(Board board) {
-		log.debug("▶▶▶▶▶ modifyBoard param: " + board.toString()); 
+		logger.debug("▶▶▶▶▶ modifyBoard param: " + board.toString()); 
 		return boardMapper.updateBoard(board);
 	}
 	
 	// 삭제 액션
 	public int removeBoard(Board board) {
-		log.debug("▶▶▶▶▶ removeBoard param: " + board); 
+		logger.debug("▶▶▶▶▶ removeBoard param: " + board); 
 		
 		// 1) 게시글 삭제( FK를 지정하지 않거나, FK를 delete no action...
 		int boardRow = boardMapper.deleteBoard(board); // 0이면 댓글이 삭제가 안된다
@@ -51,7 +56,7 @@ public class BoardService {
 				
 		// 2) 댓글 삭제
 		int commentRow = commentMapper.deleteCommentByBoardId(board.getBoardId());
-		log.debug("▶▶▶▶▶ removeBoard() commentRow: " + commentRow); 
+		logger.debug("▶▶▶▶▶ removeBoard() commentRow: " + commentRow); 
 		
 		// 3) 물리적 파일 삭제 (/resource/안에 파일)
 		List<Boardfile> boardfileList = boardfileMapper.selectBoardfileByBoardId(board.getBoardId());
@@ -74,14 +79,14 @@ public class BoardService {
 	// 추가 액션
 	public void addBoard(BoardForm boardForm) { // 0이면 입력 실패, 1이면 입력 성공
 		// boardForm --> board, boardfile
-		log.debug("▶▶▶▶▶ boardForm: " + boardForm); 
+		logger.debug("▶▶▶▶▶ boardForm: " + boardForm); 
 		
 		// 1) 
 		Board board = boardForm.getBoard(); // boardId가 null
-		log.debug("▶▶▶▶▶ board: " + board.getBoardId());  // 0
+		logger.debug("▶▶▶▶▶ board: " + board.getBoardId());  // 0
 		boardMapper.insertBoard(board); 
 		// 입력 시 만들어진 key값을 리턴받아야 한다. -> 리턴받을 수 없다. -> 매개변수 board의 boardId값을 변경해준다.
-		log.debug("▶▶▶▶▶ board: " + board.getBoardId()); // auto increment로 입력된 값
+		logger.debug("▶▶▶▶▶ board: " + board.getBoardId()); // auto increment로 입력된 값
 		
 		// 2) 
 		List<MultipartFile> list = boardForm.getBoardfile();
@@ -99,7 +104,7 @@ public class BoardService {
 				boardfile.setBoardfileName(filename); // 이슈 >>> 중복으로 인해 덮어쓰기 가능
 				boardfile.setBoardfileSize(f.getSize());
 				boardfile.setBoardfileType(f.getContentType());
-				log.debug("▶▶▶▶▶ boardfile: " + boardfile);
+				logger.debug("▶▶▶▶▶ boardfile: " + boardfile);
 				
 				// 2-1)
 				boardfileMapper.insertBoardfile(boardfile); 
@@ -119,17 +124,17 @@ public class BoardService {
 	
 	// 1) 상세보기 + 2) 댓글 목록, 수정 폼
 	public Map<String, Object> getBoardOne(int boardId) { // 전체적으로 통일하기 위해서 만든다
-		log.debug("▶▶▶▶▶ getBoardOne boardId: " + boardId); 
+		logger.debug("▶▶▶▶▶ getBoardOne boardId: " + boardId); 
 		// 1) 상세보기
 		Map<String, Object> boardMap = boardMapper.selectBoardOne(boardId);
-		log.debug("▶▶▶▶▶ boardMap: " + boardMap); 
+		logger.debug("▶▶▶▶▶ boardMap: " + boardMap); 
 		
 		// 2) boardfile 목록 --> 기존의 겟보드원을 사용함
 		List<Boardfile> boardfileList = boardfileMapper.selectBoardfileByBoardId(boardId);
 		
 		// 3) 댓글 목록
 		List<Comment> commentList = commentMapper.selectCommentListByBoard(boardId);
-		log.debug("commentList size() : "+ commentList.size());
+		logger.debug("commentList size() : "+ commentList.size());
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("boardMap", boardMap);

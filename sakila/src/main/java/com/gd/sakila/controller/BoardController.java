@@ -2,6 +2,8 @@
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,12 +22,14 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/admin") // get과 post 모두 받는다, 모든 매핑 앞에 붙는다
 public class BoardController {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired
 	BoardService boardService;
 	
 	@GetMapping("/modifyBoard")
 	public String modifyBoard(Model model, @RequestParam(value="boardId", required= true) int boardId) {
-		log.debug("▶▶▶▶▶modifyBoard param: "+boardId);
+		logger.debug("▶▶▶▶▶modifyBoard param: "+boardId);
 		// select
 		Map<String, Object> map = boardService.getBoardOne(boardId);
 		model.addAttribute("map", map);
@@ -36,7 +40,7 @@ public class BoardController {
 	public String modifyBoard(Board board) {
 		// update
 		int row = boardService.modifyBoard(board);
-		log.debug("▶▶▶▶▶update row: "+row);
+		logger.debug("▶▶▶▶▶update row: "+row);
 		return "redirect:/admin/getBoardOne?boardId="+board.getBoardId();
 	}
 	
@@ -44,7 +48,7 @@ public class BoardController {
 	@GetMapping("/removeBoard")
 	// model안에 넣는다
 	public String removeBoard(Model model, @RequestParam(value="boardId", required= true) int boardId) { // string인데 자동으로 int로 형변환 된다
-		log.debug("▶▶▶▶▶boardId param: "+boardId);
+		logger.debug("▶▶▶▶▶boardId param: "+boardId);
 		model.addAttribute("boardId", boardId);
 		return "removeBoard"; // 포워딩
 	}
@@ -53,7 +57,7 @@ public class BoardController {
 	@PostMapping("/removeBoard")
 	public String removeBoard(Board board) {
 		int row = boardService.removeBoard(board);
-		log.debug("removeBoard(): "+row);
+		logger.debug("removeBoard(): "+row);
 		if(row == 0) {
 			return "redirect:/admin/getBoardOne?boardId="+board.getBoardId();
 		} 
@@ -69,7 +73,7 @@ public class BoardController {
 	// 입력하려면 보드와 관련된 것 전부 받아야된다
 	@PostMapping("/addBoard")
 	public String addBoard(BoardForm boardForm) { // Board 타입으로 받는다 // 커맨드 객체: 폼하나의 모양과 같다. 하나의 타입으로 뭉쳐서 받는다.
-		log.debug("▶▶▶▶▶boardForm: "+boardForm);
+		logger.debug("▶▶▶▶▶boardForm: "+boardForm);
 		boardService.addBoard(boardForm); // param Board -> BoardForm으로 변경
 		return "redirect:/admin/getBoardList"; // redirect:/: 포워딩 안시키고 sendRedirect 시킨다. 리다이렉트 없으면 다 포워딩 시킨다.
 	}
@@ -77,9 +81,9 @@ public class BoardController {
 	@GetMapping("/getBoardOne")
 	public String getBoardOne(Model model, 
 								@RequestParam(value="boardId", required = true) int boardId) { // View가 있으면 모델이 존재
-		log.debug(" boardId : "+boardId); 
+		logger.debug(" boardId : "+boardId); 
 		Map<String, Object> map = boardService.getBoardOne(boardId);
-		log.debug(" getBoardOne map: "+map);
+		logger.debug(" getBoardOne map: "+map);
 		model.addAttribute("boardMap", map.get("boardMap"));
 		model.addAttribute("boardfileList", map.get("boardfileList"));
 		model.addAttribute("commentList", map.get("commentList"));

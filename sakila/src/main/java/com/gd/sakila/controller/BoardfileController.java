@@ -1,5 +1,7 @@
 package com.gd.sakila.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/admin") // get과 post 모두 받는다, 모든 매핑 앞에 붙는다
 public class BoardfileController {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired BoardfileService boardfileService;
 	
 	// 파일 추가 폼
@@ -30,8 +34,8 @@ public class BoardfileController {
 	// 파일 추가 액션
 	@PostMapping("/addBoardfile")
 	public String addBoardfile(MultipartFile multipartFile, @RequestParam(value = "boardId", required = true) int boardId) {
-		log.debug("▶▶▶▶▶addBoardd boardId: " + boardId);
-		log.debug("▶▶▶▶▶addBoardd multipartFile: " + multipartFile);
+		logger.debug("▶▶▶▶▶addBoardd boardId: " + boardId);
+		logger.debug("▶▶▶▶▶addBoardd multipartFile: " + multipartFile);
 		boardfileService.addBoardfile(multipartFile, boardId);
 		return "redirect:/admin/getBoardOne?boardId="+boardId;
 	}

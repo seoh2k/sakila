@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,12 +22,14 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/admin")
 public class InventoryController {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired InventoryService inventoryService;
 	
 	@GetMapping("/removeInventory")
 	public String removeInventory(Model model,
 				@RequestParam(value="inventoryId", required = false) Integer inventoryId) {
-		log.debug("▶▶▶▶▶removeInventory inventoryId: "+inventoryId);
+		logger.debug("▶▶▶▶▶removeInventory inventoryId: "+inventoryId);
 		
 		model.addAttribute("inventoryId", inventoryId);
 		
@@ -37,12 +41,12 @@ public class InventoryController {
 					@RequestParam(value="inventoryId", required = false) Integer inventoryId,
 					@RequestParam(value="filmId", required = false) Integer filmId,
 					@RequestParam(value="storeId", required = false) Integer storeId) {
-		log.debug("▶▶▶▶▶removeInventory inventoryId: "+inventoryId);
-		log.debug("▶▶▶▶▶removeInventory filmId: "+filmId);
-		log.debug("▶▶▶▶▶removeInventory storeId: "+storeId);
+		logger.debug("▶▶▶▶▶removeInventory inventoryId: "+inventoryId);
+		logger.debug("▶▶▶▶▶removeInventory filmId: "+filmId);
+		logger.debug("▶▶▶▶▶removeInventory storeId: "+storeId);
 		
 		int row = inventoryService.removeInventory(inventoryId);
-		log.debug("▶▶▶▶▶removeInventory row: "+row);
+		logger.debug("▶▶▶▶▶removeInventory row: "+row);
 		
 		if(row == 0) {
 			return "redirect:/admin/removeInventory";
@@ -59,15 +63,15 @@ public class InventoryController {
 	public String addInventory(
 				@RequestParam(value="filmId", required = false) Integer filmId,
 				@RequestParam(value="storeId", required = false) Integer storeId) {
-		log.debug("▶▶▶▶▶ addInventory() filmId: "+filmId);
-		log.debug("▶▶▶▶▶ addInventory() storeId: "+storeId);
+		logger.debug("▶▶▶▶▶ addInventory() filmId: "+filmId);
+		logger.debug("▶▶▶▶▶ addInventory() storeId: "+storeId);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("filmId", filmId);
 		map.put("storeId", storeId);
 		
 		int returnMap = inventoryService.addInventory(map);
-		log.debug("▶▶▶▶▶ addInventory() returnMap: "+returnMap);
+		logger.debug("▶▶▶▶▶ addInventory() returnMap: "+returnMap);
 		
 		return "redirect:/admin/getInventoryList";
 	}
@@ -78,10 +82,10 @@ public class InventoryController {
 									@RequestParam(value="currentPage", defaultValue = "1") int currentPage,
 									@RequestParam(value="rowPerPage", defaultValue = "10") int rowPerPage,
 									@RequestParam(value="searchWord", required = false) String searchWord) {
-		log.debug("▶▶▶▶▶ getInventoryList() storeId: "+storeId);
-		log.debug("▶▶▶▶▶ getInventoryList() currentPage: "+currentPage);
-		log.debug("▶▶▶▶▶ getInventoryList() rowPerPage: "+rowPerPage);
-		log.debug("▶▶▶▶▶ getInventoryList() searchWord: "+searchWord);
+		logger.debug("▶▶▶▶▶ getInventoryList() storeId: "+storeId);
+		logger.debug("▶▶▶▶▶ getInventoryList() currentPage: "+currentPage);
+		logger.debug("▶▶▶▶▶ getInventoryList() rowPerPage: "+rowPerPage);
+		logger.debug("▶▶▶▶▶ getInventoryList() searchWord: "+searchWord);
 		
 		if (searchWord != null && searchWord.equals("")) { //배우 검색
 			searchWord = null;
@@ -91,7 +95,7 @@ public class InventoryController {
 		}
 		
 		int beginRow = (currentPage - 1) * rowPerPage;
-		log.debug("▶▶▶▶▶ getInventoryList() beginRow: "+beginRow);
+		logger.debug("▶▶▶▶▶ getInventoryList() beginRow: "+beginRow);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("storeId", storeId);
@@ -106,8 +110,8 @@ public class InventoryController {
 		int inventoryTotal = inventoryService.getInventoryTotal(map);
 		int lastPage = (int)(Math.ceil((double)inventoryTotal/ rowPerPage));
 		
-		log.debug("▶▶▶▶▶ getInventoryList() inventoryTotal: "+inventoryTotal);
-		log.debug("▶▶▶▶▶ getInventoryList() lastPage: "+lastPage);
+		logger.debug("▶▶▶▶▶ getInventoryList() inventoryTotal: "+inventoryTotal);
+		logger.debug("▶▶▶▶▶ getInventoryList() lastPage: "+lastPage);
 
 		model.addAttribute("inventoryList", inventoryList);
 		model.addAttribute("currentPage", currentPage);

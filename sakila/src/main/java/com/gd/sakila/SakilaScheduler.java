@@ -1,9 +1,12 @@
 package com.gd.sakila;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.gd.sakila.controller.HomeController;
 import com.gd.sakila.service.CustomerService;
 
 import jdk.internal.org.jline.utils.Log;
@@ -12,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class SakilaScheduler {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired CustomerService customerService;
 	
 	// Scheduled 메서드 void 반환, 매개변수 0개
@@ -20,6 +25,6 @@ public class SakilaScheduler {
 	@Scheduled(cron = "0 19 11 24 * *")
 	public void modifyCustomerActive() {
 		customerService.modifyCustomerActiveByScheduler();
-		log.debug("▶▶▶▶▶ modifyCustomerActiveByScheduler 스케쥴러 실행 완료!");
+		logger.debug("▶▶▶▶▶ modifyCustomerActiveByScheduler 스케쥴러 실행 완료!");
 	}
 }

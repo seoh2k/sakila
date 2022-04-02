@@ -5,10 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gd.sakila.controller.HomeController;
 import com.gd.sakila.mapper.CountryMapper;
 import com.gd.sakila.vo.Country;
 import com.gd.sakila.vo.Page;
@@ -51,6 +54,9 @@ import com.gd.sakila.vo.Page;
 @Transactional // spring에 트랜잭션 기능이 있다. 어떤 메서드를 실행하다가 에러가 뜨면 그 메서드가 있는 서비스 롤백한다.
 public class CountryService {
 	// 만들어지지 않는 클래스가 존재하고 사용해야 한다면 생성자로 인해 기다려야한다.
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired 
 	private CountryMapper countryMapper; // 스프링 기능 1. countryMapper에 객체를 주입(의존성 주입)
 	// spring 부팅 -> Mapper라는 에노테이션이 붙어 있으니 CountryMapper의 서브 클래스를 만듬 -> 서브 클래스의 객체를 만듬 -> 서비스 에노테이션이 있으므로 자동으로 CountryService 객체를 만드는데 그 와중에 Autowired가 있으므로 countryMapper를 먼저 찾아서(없으면 만듬) 객체 주입(bean이라고 부름)

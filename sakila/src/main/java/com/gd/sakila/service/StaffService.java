@@ -4,10 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.gd.sakila.controller.HomeController;
 import com.gd.sakila.mapper.StaffListViewMapper;
 import com.gd.sakila.mapper.StaffMapper;
 import com.gd.sakila.vo.Board;
@@ -21,11 +24,13 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Transactional
 public class StaffService {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired StaffMapper staffMapper; // DI, @AutoWired 없으면 --> NullPoiintException 발생...
 	@Autowired StaffListViewMapper staffListViewMapper;
 
 	public Staff login(Staff staff) {
-		log.debug("login() param staff :"+staff);
+		logger.debug("login() param staff :"+staff);
 		return staffMapper.selectStaffByLogin(staff); // null or staff객체
 	}
 
