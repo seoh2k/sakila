@@ -45,7 +45,7 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach var="s" items="${StaffList}">
+            <c:forEach var="s" items="${staffList}">
                 <tr>
                     <td class="col-sm-1 text-center">${s.ID}</td>
                     <td class="col-sm-2 text-center">
