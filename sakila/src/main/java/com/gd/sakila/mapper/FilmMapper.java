@@ -23,4 +23,7 @@ public interface FilmMapper {
 	int selectFilmTotal(Map<String, Object> paramMap);
 	Map<String, Object> selectFilmOne(int FID);
 	List<Map<String, Object>> selectFilmActorListByFilm(int filmId);
+	
+	// 영화 전체 수
+	public int getFilmTotalCount();
 }

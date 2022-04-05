@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.sakila.service.FilmService;
 import com.gd.sakila.service.LanguageService;
@@ -31,6 +32,13 @@ public class FilmController {
 	FilmService filmService;
 	@Autowired
 	LanguageService langaugeService;
+	
+	// 영화 전체 수
+	@RequestMapping(value = "/getFilmTotalCount")
+	public @ResponseBody int getFilmTotalCount() {
+		System.out.println(filmService.getFilmTotalCount());
+		return filmService.getFilmTotalCount();
+	}
 
 	@GetMapping("/addFilm")
 	public String addFilm(Model model) {
@@ -53,7 +61,7 @@ public class FilmController {
 		return "redirect:/admin/getFilmOne?FID=" + filmId;
 	}
 
-	@GetMapping("modifyFilmActor")
+	@GetMapping("/modifyFilmActor")
 	public String modifyFilmActor(@RequestParam(value = "filmId", required = true) int filmId,
 			@RequestParam(value = "ck") int[] ck) {
 		logger.debug("▶▶▶▶▶modifyFilmActor filmId: " + filmId);

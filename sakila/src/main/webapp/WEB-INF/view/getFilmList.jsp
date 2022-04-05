@@ -11,15 +11,40 @@
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
 <script>
 $(document).ready(function(){
-	console.log('document ready')
-	$('#btn').click(function(){
+	console.log('document ready');
+	
+	/* $('#btn').click(function(){
 		console.log('btn click!');
 		$('#filmForm').submit();
-	});
+	}); */
+	
+	new Vue({
+		el: '#app', //id="app"
+		data : function() {
+			return {
+				totalCnt : 0
+			}
+		},
+		mounted : function(){
+			this.getFilmTotalCount();
+		},
+		methods : {
+			getFilmTotalCount : function(){
+				$.ajax({
+					url : '${pageContext.request.contextPath}/admin/getFilmTotalCount',
+					type : 'get',
+					context: this,
+					success: function(data) {
+						this.totalCnt = data;
+					}
+				});
+			}
+		}
+    })
 });
 </script>
 </head>
@@ -44,6 +69,8 @@ $(document).ready(function(){
     	<a href="${pageContext.request.contextPath}/admin/getInventoryList">InventoryList</a>
     	<a href="${pageContext.request.contextPath}/admin/getSalesList">SalesList</a>
     </div>
+	
+	<div id="app">Film Count: {{ getFilmTotalCount() }} {{ totalCnt }}</div>
 	 
 	<form id="filmForm" action="${pageContext.request.contextPath}/admin/getFilmList" method="get">
 		category:

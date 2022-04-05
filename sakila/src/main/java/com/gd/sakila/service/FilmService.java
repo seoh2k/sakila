@@ -132,4 +132,9 @@ public class FilmService {
 		
 		return filmCount;
 	}
+	
+	// 영화 전체 수
+	public int getFilmTotalCount() {
+		return filmMapper.getFilmTotalCount();
+	}
 }
