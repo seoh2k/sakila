@@ -29,18 +29,22 @@ $(document).ready(function(){
 				totalCnt : 0
 			}
 		},
-		mounted : function(){
-			this.getFilmTotalCount();
-		},
 		methods : {
 			getFilmTotalCount : function(){
-				$.ajax({
+				// 제이쿼리 사용
+				/* $.ajax({
 					url : '${pageContext.request.contextPath}/admin/getFilmTotalCount',
 					type : 'get',
 					context: this,
 					success: function(data) {
 						this.totalCnt = data;
 					}
+				}); */
+				
+				// fetch 함수 사용
+				let filmTotalCount = fetch('${pageContext.request.contextPath}/admin/getFilmTotalCount');
+				filmTotalCount.then((result) => result.json()).then((json) => {
+					this.totalCnt = json;
 				});
 			}
 		}
